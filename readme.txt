@@ -66,11 +66,14 @@ Yes. Field pickers are provided where possible, but manual field-path fields rem
 
 == Screenshots ==
 
-1. Elementor elements panel: `assets/screenshots/elementor-elements-panel-bodyloom-icon-list-and-toggles-plugins.png`
-2. Toggles content controls: `assets/screenshots/edit-bodyloom-toggles-content-panel.png`
-3. Toggles style controls: `assets/screenshots/edit-bodyloom-toggles-style-panel.png`
-4. Toggles advanced controls: `assets/screenshots/edit-bodyloom-toggles-advanced-panel.png`
-5. Rendered accordion example: `assets/screenshots/bodyloom-dynamic-toggles-accordion-rendered.jpg`
+1. Rendered accordion example: `assets/screenshots/bodyloom-dynamic-toggles-accordion-rendered.jpg`
+2. Elementor elements panel: `assets/screenshots/elementor-elements-panel-bodyloom-icon-list-and-toggles-plugins.png`
+3. Toggles content controls: `assets/screenshots/edit-bodyloom-toggles-content-panel-1.png`
+4. Additional toggles content controls: `assets/screenshots/edit-bodyloom-toggles-content-panel-2.png`
+5. ACF repeater field controls: `assets/screenshots/edit-bodyloom-toggles-content-panel-acf-repeater.png`
+6. Pods field controls: `assets/screenshots/edit-bodyloom-toggles-content-panel-pods.png`
+7. Meta Box field controls: `assets/screenshots/edit-bodyloom-toggles-content-panel-meta-box.png`
+8. Toggles advanced controls: `assets/screenshots/edit-bodyloom-toggles-advanced-panel.png`
 
 == Changelog ==
 

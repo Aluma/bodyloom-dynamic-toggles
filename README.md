@@ -57,7 +57,7 @@ Field pickers are convenience controls. Manual fields remain available for compa
 
 ![Content Edit Panel](assets/screenshots/edit-bodyloom-toggles-content-panel-1.png)
 
-![Content Edit Panel](assets/screenshots/edit-bodyloom-toggles-style-panel-2.png)
+![Content Edit Panel](assets/screenshots/edit-bodyloom-toggles-content-panel-2.png)
 
 *ACF Repeater*
 
