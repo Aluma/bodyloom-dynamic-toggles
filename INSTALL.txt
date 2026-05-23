@@ -23,7 +23,7 @@ Gutenberg (Block):
 4. Configure Type, Style, and other options.
 
 Shortcode:
-Use the `[bodyloom_toggles]` shortcode in any content area (Classic Editor, Divi, etc.).
+Use the `[bodyloom_toggles]` shortcode in content areas that support WordPress shortcodes.
 
 Parameters:
 - `repeater`: The name of the repeater field.

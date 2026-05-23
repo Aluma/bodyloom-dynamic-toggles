@@ -1,7 +1,7 @@
 {
 	"apiVersion": 3,
 	"name": "bodyloom/dynamic-toggles",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"title": "Dynamic Toggles",
 	"category": "widgets",
 	"icon": "excerpt-view",
@@ -17,11 +17,27 @@
 			"type": "string",
 			"default": ""
 		},
+		"repeater_field_manual": {
+			"type": "string",
+			"default": ""
+		},
 		"title_field": {
 			"type": "string",
 			"default": ""
 		},
+		"title_field_manual": {
+			"type": "string",
+			"default": ""
+		},
 		"content_field": {
+			"type": "string",
+			"default": ""
+		},
+		"content_field_manual": {
+			"type": "string",
+			"default": ""
+		},
+		"source": {
 			"type": "string",
 			"default": ""
 		},

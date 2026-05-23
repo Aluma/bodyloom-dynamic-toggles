@@ -58,14 +58,15 @@ class Plugin
      */
     private function init_hooks()
     {
+        add_action('init', [$this, 'register_assets_and_blocks']);
+
         // Register Elementor Widget
         add_action('elementor/widgets/register', [$this, 'register_widgets']);
 
         // Register Shortcode
         add_shortcode('bodyloom_toggles', [$this, 'render_shortcode']);
 
-        // Enqueue Scripts and Styles
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('rest_api_init', [$this, 'register_rest_routes']);
     }
 
     /**
@@ -82,7 +83,7 @@ class Plugin
     /**
      * Enqueue Scripts and Styles
      */
-    public function enqueue_scripts()
+    public function register_assets_and_blocks()
     {
         wp_register_style(
             'bodyloom-toggles',
@@ -94,10 +95,45 @@ class Plugin
         wp_register_script(
             'bodyloom-toggles',
             BODYLOOM_TOGGLES_URL . 'assets/js/bodyloom-toggles.js',
-            ['jquery', 'elementor-frontend'],
+            ['jquery'],
             BODYLOOM_TOGGLES_VERSION,
             true
         );
+
+        register_block_type(BODYLOOM_TOGGLES_PATH . 'blocks/toggles');
+    }
+
+    public function register_rest_routes()
+    {
+        register_rest_route(
+            'bodyloom-dynamic-toggles/v1',
+            '/fields',
+            [
+                'methods' => 'GET',
+                'callback' => [$this, 'get_field_discovery'],
+                'permission_callback' => function () {
+                    return current_user_can('edit_posts');
+                },
+                'args' => [
+                    'post_type' => [
+                        'type' => 'string',
+                        'sanitize_callback' => 'sanitize_key',
+                    ],
+                    'refresh' => [
+                        'type' => 'boolean',
+                        'default' => false,
+                    ],
+                ],
+            ]
+        );
+    }
+
+    public function get_field_discovery($request)
+    {
+        $post_type = $request->get_param('post_type') ?: 'post';
+        $refresh = (bool) $request->get_param('refresh');
+
+        return rest_ensure_response(Field_Discovery::get_rest_data($post_type, $refresh));
     }
 
     /**
@@ -110,6 +146,7 @@ class Plugin
     {
         $atts = shortcode_atts([
             'id' => '', // Post ID to pull ACF data from (optional)
+            'source' => '', // acf, pods, metabox, or empty for first active provider
             'repeater' => '', // ACF Repeater field name
             'title_field' => '', // Sub-field for title
             'content_field' => '', // Sub-field for content
@@ -127,14 +164,14 @@ class Plugin
         }
 
         $post_id = !empty($atts['id']) ? intval($atts['id']) : get_the_ID();
-        $toggles = $this->get_dynamic_data($post_id, $atts['repeater'], $atts['title_field'], $atts['content_field']);
+        $toggles = $this->get_dynamic_data($post_id, $atts['repeater'], $atts['title_field'], $atts['content_field'], $atts['source']);
 
         if (empty($toggles)) {
             return '';
         }
 
         // Prepare view data
-        $view_data = [
+        $bodyloom_view_data = [
             'id' => 'sc-' . uniqid(),
             'settings' => [
                 'type' => $atts['type'],
@@ -160,9 +197,9 @@ class Plugin
      * @param string $content_field Content field name.
      * @return array Toggles data.
      */
-    public function get_dynamic_data($post_id, $repeater_name, $title_field, $content_field)
+    public function get_dynamic_data($post_id, $repeater_name, $title_field, $content_field, $source = '')
     {
-        $provider = Provider_Factory::get_provider();
+        $provider = Provider_Factory::get_provider($source, $repeater_name);
 
         if (!$provider) {
             return [];

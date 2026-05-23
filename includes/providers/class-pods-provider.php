@@ -18,6 +18,7 @@ class Pods_Provider implements Field_Provider
     public function get_repeater_data($post_id, $field_name, $title_field, $content_field)
     {
         $data = [];
+        $field_name = \Bodyloom\DynamicToggles\Provider_Factory::parse_source_path($field_name)['path'];
 
         if (!$this->is_active()) {
             return $data;
@@ -31,8 +32,8 @@ class Pods_Provider implements Field_Provider
             if (!empty($repeater_data) && is_array($repeater_data)) {
                 foreach ($repeater_data as $item) {
                     $data[] = [
-                        'toggle_title' => $item[$title_field] ?? '',
-                        'toggle_content' => $item[$content_field] ?? '',
+                        'toggle_title' => \Bodyloom\DynamicToggles\Provider_Factory::get_nested_value($item, $title_field, $field_name),
+                        'toggle_content' => \Bodyloom\DynamicToggles\Provider_Factory::get_nested_value($item, $content_field, $field_name),
                         'toggle_custom_id' => '',
                     ];
                 }

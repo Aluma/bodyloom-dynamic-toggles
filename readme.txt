@@ -2,49 +2,81 @@
 Contributors: Jimmy Thanki
 Tags: toggles, accordion, acf, metabox, pods
 Requires at least: 5.0
-Tested up to: 6.9
-Stable tag: 1.0.5
+Tested up to: 7.0
+Requires PHP: 7.4
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Create beautiful, accessible toggles and accordions from repeater fields. Works with ACF Pro, Meta Box, or Pods.
+Create static and dynamic toggles or accordions from Elementor, blocks, shortcodes, and custom field repeaters.
 
 == Description ==
 
-Bodyloom Dynamic Toggles allows you to easily create dynamic toggles and accordions using data from your favorite custom field plugins.
+Bodyloom Dynamic Toggles displays static toggle items or dynamic accordion content from ACF Pro, Meta Box, and Pods repeater-style fields. It includes an Elementor widget, a dynamic block, and a shortcode.
 
-**Key Features:**
-*   **Universal Support:** Works with Elementor, Gutenberg, Divi, and more.
-*   **Multi-Provider:** Supports ACF Pro, Meta Box, and Pods.
-*   **SEO Friendly:** Optional FAQ Schema generation.
-*   **Accessible:** WAI-ARIA compliant.
-*   **Customizable:** Multiple built-in styles (Arrow, Plus/Minus, Chevron).
+Features include:
+
+* Static toggles and accordions in Elementor.
+* Dynamic repeater field output from ACF Pro, Meta Box, or Pods.
+* Editor field pickers with manual field-path fallbacks.
+* Optional FAQ schema output.
+* Keyboard-accessible toggle controls.
+* Gutenberg block and shortcode rendering for non-Elementor layouts.
+
+The plugin does not connect to external services or load remote JavaScript or CSS.
 
 == Installation ==
 
 1. Upload `bodyloom-dynamic-toggles` to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
+2. Activate the plugin through the Plugins menu in WordPress.
+3. Add the Bodyloom Toggles widget, the Dynamic Toggles block, or the `[bodyloom_toggles]` shortcode.
 
 == Usage ==
 
-**Shortcode:**
-`[bodyloom_toggles repeater="my_repeater" title_field="question" content_field="answer"]`
+= Elementor =
 
-**Elementor:**
-Use the "Bodyloom Toggles" widget.
+Use the "Bodyloom Toggles" widget. Choose Static for manually managed toggle items, or choose a dynamic source to select a repeater field from ACF Pro, Meta Box, or Pods.
 
-**Gutenberg:**
-Use the "Dynamic Toggles" block.
+= Block Editor =
 
-== Changelog ==
+Use the "Dynamic Toggles" block and configure the field source in the block sidebar.
 
-= 1.0.0 =
-*   Initial release.
+= Shortcode =
+
+Use a shortcode such as:
+
+`[bodyloom_toggles source="acf" repeater="my_repeater" title_field="question" content_field="answer" type="accordion"]`
+
+== Frequently Asked Questions ==
+
+= Does this require ACF Pro, Meta Box, or Pods? =
+
+No. Static Elementor toggles work without those plugins. Dynamic repeater output requires the matching field plugin to be active and configured.
+
+= What happens if a dynamic field plugin is missing? =
+
+The widget, block, or shortcode returns an empty result instead of causing a fatal error.
+
+= Can I still type field paths manually? =
+
+Yes. Field pickers are provided where possible, but manual field-path fields remain available for compatibility and fallback use.
 
 == Screenshots ==
 
-1. Elementor Elements Panel (assets/screenshots/elementor-elements-panel-bodyloom-icon-list-and-toggles-plugins.png)
-2. Content Panel (assets/screenshots/edit-bodyloom-toggles-content-panel.png)
-3. Style Panel (assets/screenshots/edit-bodyloom-toggles-style-panel.png)
-4. Advanced Panel (assets/screenshots/edit-bodyloom-toggles-advanced-panel.png)
-5. Rendered Frontend Example (assets/screenshots/bodyloom-dynamic-toggles-accordion-rendered.jpg)
+1. Elementor elements panel.
+2. Toggles content controls.
+3. Toggles style controls.
+4. Toggles advanced controls.
+5. Rendered frontend example.
+
+== Changelog ==
+
+= 1.1.0 =
+* Added editor field pickers with manual field-path fallbacks.
+* Added dynamic source selection for ACF Pro, Meta Box, and Pods.
+* Registered the Dynamic Toggles block from plugin initialization.
+* Improved shortcode and block frontend behavior without requiring Elementor.
+* Hardened rendering and metadata for WordPress.org submission.
+
+= 1.0.0 =
+* Initial release.

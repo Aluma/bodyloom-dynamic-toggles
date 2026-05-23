@@ -10,6 +10,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
+use Bodyloom\DynamicToggles\Field_Discovery;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -46,6 +47,11 @@ class Toggles extends Widget_Base
     public function get_style_depends()
     {
         return ['bodyloom-toggles'];
+    }
+
+    protected function is_dynamic_content(): bool
+    {
+        return true;
     }
 
     protected function register_controls()
@@ -92,6 +98,14 @@ class Toggles extends Widget_Base
                     ],
                     'acf_repeater' => [
                         'title' => esc_html__('ACF Repeater', 'bodyloom-dynamic-toggles'),
+                        'icon' => 'eicon-database',
+                    ],
+                    'pods_repeater' => [
+                        'title' => esc_html__('Pods', 'bodyloom-dynamic-toggles'),
+                        'icon' => 'eicon-database',
+                    ],
+                    'metabox_repeater' => [
+                        'title' => esc_html__('Meta Box', 'bodyloom-dynamic-toggles'),
                         'icon' => 'eicon-database',
                     ],
                 ],
@@ -161,21 +175,29 @@ class Toggles extends Widget_Base
             'acf_repeater_notice',
             [
                 'type' => Controls_Manager::RAW_HTML,
-                'raw' => esc_html__('Please ensure ACF Pro is active.', 'bodyloom-dynamic-toggles'),
+                'raw' => esc_html__('Choose a discovered field when available, or use the manual path fallback.', 'bodyloom-dynamic-toggles'),
                 'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
-                'condition' => [
-                    'data_source' => 'acf_repeater',
-                ],
+                'condition' => ['data_source!' => 'static'],
             ]
         );
 
         $this->add_control(
             'acf_repeater_field_name',
             [
-                'label' => esc_html__('ACF Repeater Name', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Repeater Field Path', 'bodyloom-dynamic-toggles'),
+                'type' => Controls_Manager::SELECT2,
+                'options' => Field_Discovery::get_repeater_options(get_post_type() ?: 'post'),
+                'description' => esc_html__('Supports nested paths such as parent_group/repeater_name.', 'bodyloom-dynamic-toggles'),
+                'condition' => ['data_source!' => 'static'],
+            ]
+        );
+
+        $this->add_control(
+            'acf_repeater_field_name_manual',
+            [
+                'label' => esc_html__('Manual Repeater Field Path', 'bodyloom-dynamic-toggles'),
                 'type' => Controls_Manager::TEXT,
-                'description' => esc_html__('For nested repeaters: parent_group/repeater_name', 'bodyloom-dynamic-toggles'),
-                'condition' => ['data_source' => 'acf_repeater'],
+                'condition' => ['data_source!' => 'static'],
             ]
         );
 
@@ -183,8 +205,18 @@ class Toggles extends Widget_Base
             'acf_title_field',
             [
                 'label' => esc_html__('Title Sub-Field', 'bodyloom-dynamic-toggles'),
+                'type' => Controls_Manager::SELECT2,
+                'options' => Field_Discovery::get_leaf_field_options(get_post_type() ?: 'post'),
+                'condition' => ['data_source!' => 'static'],
+            ]
+        );
+
+        $this->add_control(
+            'acf_title_field_manual',
+            [
+                'label' => esc_html__('Manual Title Sub-Field', 'bodyloom-dynamic-toggles'),
                 'type' => Controls_Manager::TEXT,
-                'condition' => ['data_source' => 'acf_repeater'],
+                'condition' => ['data_source!' => 'static'],
             ]
         );
 
@@ -192,8 +224,18 @@ class Toggles extends Widget_Base
             'acf_content_field',
             [
                 'label' => esc_html__('Content Sub-Field', 'bodyloom-dynamic-toggles'),
+                'type' => Controls_Manager::SELECT2,
+                'options' => Field_Discovery::get_leaf_field_options(get_post_type() ?: 'post'),
+                'condition' => ['data_source!' => 'static'],
+            ]
+        );
+
+        $this->add_control(
+            'acf_content_field_manual',
+            [
+                'label' => esc_html__('Manual Content Sub-Field', 'bodyloom-dynamic-toggles'),
                 'type' => Controls_Manager::TEXT,
-                'condition' => ['data_source' => 'acf_repeater'],
+                'condition' => ['data_source!' => 'static'],
             ]
         );
 
@@ -495,8 +537,8 @@ class Toggles extends Widget_Base
                 'label' => esc_html__('Color', 'bodyloom-dynamic-toggles'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .active-toggle .bodyloom-toggles__title' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .active-toggle .bodyloom-toggles__title-link' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle .bodyloom-toggles__title-link' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -507,7 +549,7 @@ class Toggles extends Widget_Base
                 'label' => esc_html__('Background', 'bodyloom-dynamic-toggles'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .active-toggle .bodyloom-toggles__title' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -518,7 +560,7 @@ class Toggles extends Widget_Base
                 'label' => esc_html__('Border Color', 'bodyloom-dynamic-toggles'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .active-toggle .bodyloom-toggles__title' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle' => 'border-color: {{VALUE}};',
                 ],
                 'condition' => ['title_border_border!' => ''],
             ]
@@ -531,7 +573,7 @@ class Toggles extends Widget_Base
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .active-toggle .bodyloom-toggles__title' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -540,7 +582,7 @@ class Toggles extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'title_box_shadow_active',
-                'selector' => '{{WRAPPER}} .active-toggle .bodyloom-toggles__title',
+                'selector' => '{{WRAPPER}} .bodyloom-toggles__title.active-toggle',
             ]
         );
 
@@ -548,7 +590,7 @@ class Toggles extends Widget_Base
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'title_text_shadow_active',
-                'selector' => '{{WRAPPER}} .active-toggle .bodyloom-toggles__title-text',
+                'selector' => '{{WRAPPER}} .bodyloom-toggles__title.active-toggle .bodyloom-toggles__title-text',
             ]
         );
 
@@ -728,7 +770,7 @@ class Toggles extends Widget_Base
                 'label' => esc_html__('Color', 'bodyloom-dynamic-toggles'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .active-toggle .bodyloom-toggles__trigger' => 'color: {{VALUE}}; fill: {{VALUE}};',
+                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle .bodyloom-toggles__trigger' => 'color: {{VALUE}}; fill: {{VALUE}};',
                 ],
             ]
         );
@@ -739,7 +781,7 @@ class Toggles extends Widget_Base
                 'label' => esc_html__('Background', 'bodyloom-dynamic-toggles'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .active-toggle .bodyloom-toggles__trigger' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle .bodyloom-toggles__trigger' => 'background-color: {{VALUE}};',
                 ],
                 'condition' => ['trigger_icon_view!' => 'default'],
             ]
@@ -751,7 +793,7 @@ class Toggles extends Widget_Base
                 'label' => esc_html__('Border Color', 'bodyloom-dynamic-toggles'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .active-toggle .bodyloom-toggles__trigger' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle .bodyloom-toggles__trigger' => 'border-color: {{VALUE}};',
                 ],
                 'condition' => ['trigger_icon_view' => 'framed'],
             ]
@@ -891,7 +933,7 @@ class Toggles extends Widget_Base
                 'label' => esc_html__('Background', 'bodyloom-dynamic-toggles'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__item' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; border-style: solid;',
+                    '{{WRAPPER}} .bodyloom-toggles__content' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -998,7 +1040,7 @@ class Toggles extends Widget_Base
         $settings = $this->get_settings_for_display();
         $toggles = [];
 
-        if ('acf_repeater' === $settings['data_source']) {
+        if ('static' !== $settings['data_source']) {
             $toggles = $this->get_dynamic_toggles($settings);
         } else {
             $toggles = $settings['toggles'];
@@ -1011,7 +1053,7 @@ class Toggles extends Widget_Base
         $id_int = substr($this->get_id_int(), 0, 3);
         $widget_class = 'bodyloom-toggles';
 
-        echo '<div class="' . $widget_class . '__list">';
+        echo '<div class="' . esc_attr($widget_class . '__list') . '" data-type="' . esc_attr($settings['type']) . '" data-default-toggle="' . esc_attr((string) $settings['default_toggle']) . '">';
 
         foreach ($toggles as $index => $item) {
             $tab_count = $index + 1;
@@ -1045,41 +1087,41 @@ class Toggles extends Widget_Base
 
             $custom_id = '';
             if (!empty($item['toggle_custom_id'])) {
-                $custom_id = ' toggle_custom_id="' . esc_attr($item['toggle_custom_id']) . '"';
+                $custom_id = ' data-toggle-custom-id="' . esc_attr(str_replace('#', '', $item['toggle_custom_id'])) . '"';
             }
 
-            echo '<div class="' . $widget_class . '__item"' . $custom_id . '>';
+            echo '<div class="' . esc_attr($widget_class . '__item') . '"' . $custom_id . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $custom_id is escaped above.
 
             // Title
             $title_tag = Utils::validate_html_tag($settings['title_html_tag']);
-            echo '<' . $title_tag . ' ' . $this->get_render_attribute_string($toggle_title_setting_key) . '>';
+            echo '<' . tag_escape($title_tag) . ' ' . $this->get_render_attribute_string($toggle_title_setting_key) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render attributes are escaped by get_render_attribute_string().
 
             // Link
-            echo '<a class="' . $widget_class . '__title-link" href="#" tabindex="-1">';
-            echo '<span class="' . $widget_class . '__title-text">' . wp_kses_post($item['toggle_title']) . '</span>';
+            echo '<a class="' . esc_attr($widget_class . '__title-link') . '" href="#" tabindex="-1">';
+            echo '<span class="' . esc_attr($widget_class . '__title-text') . '">' . wp_kses_post($item['toggle_title']) . '</span>';
             echo '</a>';
 
             // Trigger Icon
             if (!empty($settings['trigger_icon']['value'])) {
-                echo '<span class="' . $widget_class . '__trigger">';
+                echo '<span class="' . esc_attr($widget_class . '__trigger') . '">';
 
-                echo '<span class="' . $widget_class . '__trigger-closed">';
+                echo '<span class="' . esc_attr($widget_class . '__trigger-closed') . '">';
                 Icons_Manager::render_icon($settings['trigger_icon'], ['aria-hidden' => 'true']);
                 echo '</span>';
 
                 $active_icon = !empty($settings['trigger_active_icon']['value']) ? $settings['trigger_active_icon'] : $settings['trigger_icon'];
-                echo '<span class="' . $widget_class . '__trigger-opened">';
+                echo '<span class="' . esc_attr($widget_class . '__trigger-opened') . '">';
                 Icons_Manager::render_icon($active_icon, ['aria-hidden' => 'true']);
                 echo '</span>';
 
                 echo '</span>';
             }
 
-            echo '</' . $title_tag . '>';
+            echo '</' . tag_escape($title_tag) . '>';
 
             // Content
-            echo '<div ' . $this->get_render_attribute_string($toggle_content_setting_key) . ' ' . $content_style . '>';
-            echo $this->parse_text_editor($item['toggle_content']);
+            echo '<div ' . $this->get_render_attribute_string($toggle_content_setting_key) . ' ' . $content_style . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo $this->parse_text_editor($item['toggle_content']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor text editor parser returns sanitized editor content.
             echo '</div>';
 
             echo '</div>'; // End Item
@@ -1107,22 +1149,39 @@ class Toggles extends Widget_Base
                     ],
                 ];
             }
-            echo '<script type="application/ld+json">' . wp_json_encode($json) . '</script>';
+            $json_ld = wp_json_encode(
+                $json,
+                JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+            );
+
+            if (false !== $json_ld) {
+                echo '<script type="application/ld+json">' . $json_ld . '</script>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            }
         }
     }
 
     protected function get_dynamic_toggles($settings)
     {
-        $repeater_name = $settings['acf_repeater_field_name'];
-        $title_field = $settings['acf_title_field'];
-        $content_field = $settings['acf_content_field'];
+        $repeater_name = !empty($settings['acf_repeater_field_name']) ? $settings['acf_repeater_field_name'] : ($settings['acf_repeater_field_name_manual'] ?? '');
+        $title_field = !empty($settings['acf_title_field']) ? $settings['acf_title_field'] : ($settings['acf_title_field_manual'] ?? '');
+        $content_field = !empty($settings['acf_content_field']) ? $settings['acf_content_field'] : ($settings['acf_content_field_manual'] ?? '');
 
         if (empty($repeater_name) || empty($title_field) || empty($content_field)) {
             return [];
         }
 
         $post_id = get_the_ID();
-        $provider = \Bodyloom\DynamicToggles\Provider_Factory::get_provider();
+        $source = '';
+
+        if ('acf_repeater' === $settings['data_source']) {
+            $source = 'acf';
+        } elseif ('pods_repeater' === $settings['data_source']) {
+            $source = 'pods';
+        } elseif ('metabox_repeater' === $settings['data_source']) {
+            $source = 'metabox';
+        }
+
+        $provider = \Bodyloom\DynamicToggles\Provider_Factory::get_provider($source, $repeater_name);
 
         if (!$provider) {
             return [];

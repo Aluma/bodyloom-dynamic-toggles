@@ -3,60 +3,50 @@
 **Contributors:** Jimmy Thanki  
 **Tags:** toggles, accordion, acf, metabox, pods  
 **Requires at least:** 5.0  
-**Tested up to:** 6.7  
+**Tested up to:** 7.0  
 **Requires PHP:** 7.4  
+**Stable tag:** 1.1.0  
 **License:** GPLv2 or later  
 
-## Description
+Bodyloom Dynamic Toggles creates static and dynamic toggles or accordions from Elementor, blocks, shortcodes, and custom field repeaters.
 
-Bodyloom Dynamic Toggles allows you to easily create dynamic toggles and accordions using data from your favorite custom field plugins.
+## Features
 
-**Key Features:**
-*   **Universal Support:** Works with Elementor, Gutenberg, Divi, and more.
-*   **Multi-Provider:** Supports ACF Pro, Meta Box, and Pods.
-*   **SEO Friendly:** Optional FAQ Schema generation.
-*   **Accessible:** WAI-ARIA compliant.
-*   **Customizable:** Multiple built-in styles (Arrow, Plus/Minus, Chevron).
+- Static toggles and accordions in Elementor.
+- Dynamic repeater output from ACF Pro, Meta Box, or Pods.
+- Editor field pickers with manual field-path fallbacks.
+- Optional FAQ schema output.
+- Keyboard-accessible toggle controls.
+- Gutenberg block and shortcode rendering for non-Elementor layouts.
 
 ## Installation
 
-1. Upload `bodyloom-dynamic-toggles` to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
+1. Upload `bodyloom-dynamic-toggles` to `/wp-content/plugins/`.
+2. Activate the plugin in WordPress.
+3. Add the Bodyloom Toggles widget, block, or shortcode.
 
 ## Usage
 
-**Shortcode:**
-`[bodyloom_toggles repeater="my_repeater" title_field="question" content_field="answer"]`
+Elementor: use the "Bodyloom Toggles" widget.
 
-**Elementor:**
-Search for the "Bodyloom Toggles" widget and drag it into your layout.
+Block Editor: use the "Dynamic Toggles" block.
 
-**Gutenberg:**
-Search for the "Dynamic Toggles" block and add it to your post or page.
+Shortcode:
+
+```text
+[bodyloom_toggles source="acf" repeater="my_repeater" title_field="question" content_field="answer" type="accordion"]
+```
 
 ## Changelog
 
+### 1.1.0
+
+- Added editor field pickers with manual field-path fallbacks.
+- Added dynamic source selection for ACF Pro, Meta Box, and Pods.
+- Registered the Dynamic Toggles block from plugin initialization.
+- Improved shortcode and block frontend behavior without requiring Elementor.
+- Hardened rendering and metadata for WordPress.org submission.
+
 ### 1.0.0
-*   Initial release.
 
-## Screenshots
-
-*Elementor Elements Panel*
-
-![Elementor Elements Panel](assets/screenshots/elementor-elements-panel-bodyloom-icon-list-and-toggles-plugins.png)
-
-*Content Panel*
-
-![Content Panel](assets/screenshots/edit-bodyloom-toggles-content-panel.png)
-
-*Style Panel*
-
-![Style Panel](assets/screenshots/edit-bodyloom-toggles-style-panel.png)
-
-*Advanced Panel*
-
-![Advanced Panel](assets/screenshots/edit-bodyloom-toggles-advanced-panel.png)
-
-*Rendered Frontend Example*
-
-![Rendered Frontend Example](assets/screenshots/bodyloom-dynamic-toggles-accordion-rendered.jpg)
+- Initial release.

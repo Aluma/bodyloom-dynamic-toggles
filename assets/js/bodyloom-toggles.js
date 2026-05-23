@@ -1,146 +1,139 @@
-jQuery(window).on('elementor/frontend/init', function () {
+(function ($) {
+    'use strict';
 
-    var BodyloomTogglesHandler = elementorModules.frontend.handlers.Base.extend({
+    var selectors = {
+        wrapper: '.bodyloom-toggles__list',
+        title: '.bodyloom-toggles__title',
+        content: '.bodyloom-toggles__content'
+    };
 
-        getDefaultSettings: function () {
-            return {
-                selectors: {
-                    toggleTitle: '.bodyloom-toggles__title',
-                    toggleContent: '.bodyloom-toggles__content',
-                    wrapper: '.bodyloom-toggles__list'
-                },
-                classes: {
-                    active: 'active-toggle'
-                },
-                showTabFn: 'slideDown',
-                hideTabFn: 'slideUp'
-            };
-        },
+    var activeClass = 'active-toggle';
 
-        getDefaultElements: function () {
-            var selectors = this.getSettings('selectors');
-            return {
-                $wrapper: this.$element.find(selectors.wrapper),
-                $toggleTitles: this.$element.find(selectors.toggleTitle),
-                $toggleContents: this.$element.find(selectors.toggleContent)
-            };
-        },
+    function activateTab($wrapper, tabIndex, $title) {
+        $title = $title || $wrapper.find(selectors.title + '[data-tab="' + tabIndex + '"]');
 
-        bindEvents: function () {
-            this.elements.$toggleTitles.on('click', this.onTitleClick.bind(this));
-            this.elements.$toggleTitles.on('keydown', this.onTitleKeyPress.bind(this));
-        },
+        var $content = $wrapper.find(selectors.content + '[data-tab="' + tabIndex + '"]');
 
-        onInit: function () {
-            elementorModules.frontend.handlers.Base.prototype.onInit.apply(this, arguments);
+        $title.addClass(activeClass).attr('aria-expanded', 'true');
+        $content.addClass(activeClass).stop(true, true).slideDown(300);
+    }
 
-            // Check for Hash
-            this.checkHash();
+    function deactivateTab($wrapper, $title) {
+        var tabIndex = $title.data('tab');
+        var $content = $wrapper.find(selectors.content + '[data-tab="' + tabIndex + '"]');
 
-            // Default Active Tab if specified (and no hash overriding)
-            if (!location.hash) {
-                var defaultActive = this.getElementSettings('default_toggle');
-                // Check if any tab is already active (rendered by PHP)
-                var $activeTitle = this.elements.$toggleTitles.filter('.' + this.getSettings('classes.active'));
+        $title.removeClass(activeClass).attr('aria-expanded', 'false');
+        $content.removeClass(activeClass).stop(true, true).slideUp(300);
+    }
 
-                if (!$activeTitle.length && defaultActive > 0) {
-                    this.activateTab(defaultActive);
-                }
+    function deactivateAllTabs($wrapper) {
+        $wrapper.find(selectors.title + '.' + activeClass).each(function () {
+            deactivateTab($wrapper, $(this));
+        });
+    }
+
+    function bindWrapper($wrapper, settings) {
+        if (!$wrapper.length || $wrapper.data('bodyloomTogglesBound')) {
+            return;
+        }
+
+        settings = settings || {};
+        $wrapper.data('bodyloomTogglesBound', true);
+
+        $wrapper.find(selectors.title).each(function () {
+            var $title = $(this);
+
+            if (!$title.attr('aria-expanded')) {
+                $title.attr('aria-expanded', $title.hasClass(activeClass) ? 'true' : 'false');
             }
-        },
+        });
 
-        onTitleClick: function (event) {
+        $wrapper.on('click.bodyloomToggles', selectors.title, function (event) {
             event.preventDefault();
-            var $clickedTitle = jQuery(event.currentTarget);
+
+            var $clickedTitle = $(event.currentTarget);
             var tabIndex = $clickedTitle.data('tab');
-            this.changeTab(tabIndex, $clickedTitle);
-        },
-
-        onTitleKeyPress: function (event) {
-            if (event.which === 13 || event.which === 32) { // Enter or Space
-                event.preventDefault();
-                this.elements.$toggleTitles.filter(event.currentTarget).trigger('click');
-            }
-        },
-
-        changeTab: function (tabIndex, $clickedTitle) {
-            var settings = this.getSettings();
-            var isActive = $clickedTitle.hasClass(settings.classes.active);
-            var isAccordion = (this.getElementSettings('type') === 'accordion');
+            var isAccordion = settings.type === 'accordion';
+            var isActive = $clickedTitle.hasClass(activeClass);
 
             if (isActive) {
-                // If it's a toggle, or accordion allowing closure (usually standard behavior)
-                // Reference accordion logic might force one open? The reference logic allows closing if toggleSelf is true or not strict accordion.
-                // We will implement standard toggle behavior: click active to close.
-                this.deactivateTab($clickedTitle);
+                deactivateTab($wrapper, $clickedTitle);
                 return;
             }
 
             if (isAccordion) {
-                this.deactivateAllTabs();
+                deactivateAllTabs($wrapper);
             }
 
-            this.activateTab(tabIndex, $clickedTitle);
-        },
+            activateTab($wrapper, tabIndex, $clickedTitle);
+        });
 
-        activateTab: function (tabIndex, $title) {
-            var settings = this.getSettings();
-
-            if (!$title) {
-                $title = this.elements.$toggleTitles.filter('[data-tab="' + tabIndex + '"]');
+        $wrapper.on('keydown.bodyloomToggles', selectors.title, function (event) {
+            if (event.which === 13 || event.which === 32) {
+                event.preventDefault();
+                $(event.currentTarget).trigger('click');
             }
+        });
 
-            var $content = this.elements.$toggleContents.filter('[data-tab="' + tabIndex + '"]');
-
-            $title.addClass(settings.classes.active).attr('aria-expanded', 'true');
-            $content.addClass(settings.classes.active);
-
-            // If animation needed
-            $content[settings.showTabFn](300);
-        },
-
-        deactivateTab: function ($title) {
-            var settings = this.getSettings();
-            var tabIndex = $title.data('tab');
-            var $content = this.elements.$toggleContents.filter('[data-tab="' + tabIndex + '"]');
-
-            $title.removeClass(settings.classes.active).attr('aria-expanded', 'false');
-            $content.removeClass(settings.classes.active);
-
-            $content[settings.hideTabFn](300);
-        },
-
-        deactivateAllTabs: function () {
-            var self = this;
-            this.elements.$toggleTitles.each(function () {
-                var $title = jQuery(this);
-                if ($title.hasClass(self.getSettings('classes.active'))) {
-                    self.deactivateTab($title);
-                }
-            });
-        },
-
-        checkHash: function () {
-            var hash = location.hash;
-            // Support custom ID (item level) or default anchor behavior
-            if (hash) {
-                // Check if hash matches a toggle_custom_id
-                var $targetItem = this.$element.find('[toggle_custom_id="' + hash + '"], [toggle_custom_id="' + hash.replace('#', '') + '"]');
-
-                if ($targetItem.length) {
-                    var $title = $targetItem.find(this.getSettings('selectors.toggleTitle'));
-                    this.activateTab($title.data('tab'), $title);
-
-                    // Scroll
-                    jQuery('html, body').animate({
-                        scrollTop: $targetItem.offset().top - 100
-                    }, 500);
-                }
-            }
+        if (window.location.hash) {
+            openHashTarget($wrapper, window.location.hash);
+        } else if (settings.defaultToggle > 0 && !$wrapper.find(selectors.title + '.' + activeClass).length) {
+            activateTab($wrapper, settings.defaultToggle);
         }
-    });
+    }
 
-    elementorFrontend.hooks.addAction('frontend/element_ready/bodyloom-toggles.default', function ($scope) {
-        new BodyloomTogglesHandler({ $element: $scope });
+    function openHashTarget($wrapper, hash) {
+        var cleanHash = String(hash).replace('#', '');
+
+        if (!cleanHash) {
+            return;
+        }
+
+        var $targetItem = $wrapper.find('[data-toggle-custom-id="' + cleanHash + '"]');
+
+        if (!$targetItem.length) {
+            return;
+        }
+
+        var $title = $targetItem.find(selectors.title).first();
+        activateTab($wrapper, $title.data('tab'), $title);
+
+        $('html, body').animate({
+            scrollTop: $targetItem.offset().top - 100
+        }, 500);
+    }
+
+    function bindAll() {
+        $(selectors.wrapper).each(function () {
+            var $wrapper = $(this);
+            bindWrapper($wrapper, {
+                type: $wrapper.data('type') || 'toggles',
+                defaultToggle: parseInt($wrapper.data('default-toggle'), 10) || 0
+            });
+        });
+    }
+
+    $(bindAll);
+
+    $(window).on('elementor/frontend/init', function () {
+        if (!window.elementorFrontend || !window.elementorModules) {
+            return;
+        }
+
+        var BodyloomTogglesHandler = window.elementorModules.frontend.handlers.Base.extend({
+            onInit: function () {
+                window.elementorModules.frontend.handlers.Base.prototype.onInit.apply(this, arguments);
+
+                var settings = this.getElementSettings();
+                bindWrapper(this.$element.find(selectors.wrapper), {
+                    type: settings.type || 'toggles',
+                    defaultToggle: parseInt(settings.default_toggle, 10) || 0
+                });
+            }
+        });
+
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/bodyloom-toggles.default', function ($scope) {
+            new BodyloomTogglesHandler({ $element: $scope });
+        });
     });
-});
+})(jQuery);
