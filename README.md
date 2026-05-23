@@ -45,20 +45,38 @@ Field pickers are convenience controls. Manual fields remain available for compa
 
 ## Screenshots
 
+*Rendered Accordion Example*
+
+![Rendered Accordion Example](assets/screenshots/bodyloom-dynamic-toggles-accordion-rendered.jpg)
+
 *Elementor Elements Panel*
+
 ![Elementor Elements Panel](assets/screenshots/elementor-elements-panel-bodyloom-icon-list-and-toggles-plugins.png)
 
 *Content Edit Panel*
-![Content Edit Panel](assets/screenshots/edit-bodyloom-toggles-content-panel.png)
 
-*Style Edit Panel*
-![Style Edit Panel](assets/screenshots/edit-bodyloom-toggles-style-panel.png)
+![Content Edit Panel](assets/screenshots/edit-bodyloom-toggles-content-panel-1.png)
+
+![Content Edit Panel](assets/screenshots/edit-bodyloom-toggles-style-panel-2.png)
+
+*ACF Repeater*
+
+![ACF Repeater Support](assets/screenshots/edit-bodyloom-toggles-content-panel-acf-repeater.png)
+
+
+*Pods*
+
+![Pods Support](assets/screenshots/edit-bodyloom-toggles-content-panel-pods.png)
+
+
+*Meta Box*
+
+![Meta Box Support](assets/screenshots/edit-bodyloom-toggles-content-panel-meta-box.png)
 
 *Advanced Edit Panel*
+
 ![Advanced Edit Panel](assets/screenshots/edit-bodyloom-toggles-advanced-panel.png)
 
-*Rendered Accordion Example*
-![Rendered Accordion Example](assets/screenshots/bodyloom-dynamic-toggles-accordion-rendered.jpg)
 
 ## Changelog
 
