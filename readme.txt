@@ -8,20 +8,24 @@ Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Create static and dynamic toggles or accordions from Elementor, blocks, shortcodes, and custom field repeaters.
+Create static and dynamic toggles or accordions for Elementor, the Block Editor, and shortcodes.
 
 == Description ==
 
-Bodyloom Dynamic Toggles displays static toggle items or dynamic accordion content from ACF Pro, Meta Box, and Pods repeater-style fields. It includes an Elementor widget, a dynamic block, and a shortcode.
+Bodyloom Dynamic Toggles displays static toggle items or dynamic accordion content from ACF Pro, Meta Box, and Pods repeater-style fields. It includes an Elementor widget, a dynamic block, and a shortcode so the same toggle content pattern can be used across page builders and native WordPress content.
 
 Features include:
 
 * Static toggles and accordions in Elementor.
 * Dynamic repeater field output from ACF Pro, Meta Box, or Pods.
-* Editor field pickers with manual field-path fallbacks.
-* Optional FAQ schema output.
-* Keyboard-accessible toggle controls.
+* Editor field pickers for discovered repeater and subfield paths.
+* Manual field-path fallbacks for compatibility, nested paths, and undiscovered field layouts.
+* Accordion and toggle interaction modes.
+* Optional FAQ schema output with hardened JSON-LD encoding.
+* Keyboard-accessible frontend controls.
 * Gutenberg block and shortcode rendering for non-Elementor layouts.
+* Frontend JavaScript that works without Elementor being loaded.
+* Defensive provider handling so missing optional plugins do not fatal the site.
 
 The plugin does not connect to external services or load remote JavaScript or CSS.
 
@@ -35,17 +39,16 @@ The plugin does not connect to external services or load remote JavaScript or CS
 
 = Elementor =
 
-Use the "Bodyloom Toggles" widget. Choose Static for manually managed toggle items, or choose a dynamic source to select a repeater field from ACF Pro, Meta Box, or Pods.
+Use the "Bodyloom Toggles" widget. Choose Static for manually managed toggle items, or Dynamic to use repeater data from ACF Pro, Meta Box, or Pods.
 
 = Block Editor =
 
-Use the "Dynamic Toggles" block and configure the field source in the block sidebar.
+Use the "Dynamic Toggles" block and configure the source, repeater field, title field, content field, and interaction mode in the block sidebar.
 
 = Shortcode =
 
 Use a shortcode such as:
-
-`[bodyloom_toggles source="acf" repeater="my_repeater" title_field="question" content_field="answer" type="accordion"]`
+`[bodyloom_toggles src="acf" repeater="my_repeater" title_field="question" content_field="answer" type="accordion"]`
 
 == Frequently Asked Questions ==
 
@@ -59,15 +62,15 @@ The widget, block, or shortcode returns an empty result instead of causing a fat
 
 = Can I still type field paths manually? =
 
-Yes. Field pickers are provided where possible, but manual field-path fields remain available for compatibility and fallback use.
+Yes. Field pickers are provided where possible, but manual field-path fields remain available for compatibility, nested paths, and fallback use.
 
 == Screenshots ==
 
-1. Elementor elements panel.
-2. Toggles content controls.
-3. Toggles style controls.
-4. Toggles advanced controls.
-5. Rendered frontend example.
+1. Elementor elements panel: `assets/screenshots/elementor-elements-panel-bodyloom-icon-list-and-toggles-plugins.png`
+2. Toggles content controls: `assets/screenshots/edit-bodyloom-toggles-content-panel.png`
+3. Toggles style controls: `assets/screenshots/edit-bodyloom-toggles-style-panel.png`
+4. Toggles advanced controls: `assets/screenshots/edit-bodyloom-toggles-advanced-panel.png`
+5. Rendered accordion example: `assets/screenshots/bodyloom-dynamic-toggles-accordion-rendered.jpg`
 
 == Changelog ==
 
@@ -76,7 +79,8 @@ Yes. Field pickers are provided where possible, but manual field-path fields rem
 * Added dynamic source selection for ACF Pro, Meta Box, and Pods.
 * Registered the Dynamic Toggles block from plugin initialization.
 * Improved shortcode and block frontend behavior without requiring Elementor.
-* Hardened rendering and metadata for WordPress.org submission.
+* Hardened rendering, JSON-LD output, and metadata for WordPress.org submission.
+* Updated screenshot references and documentation for the v1.1.0 feature set.
 
 = 1.0.0 =
 * Initial release.
