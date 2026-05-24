@@ -23,6 +23,14 @@ Bodyloom Dynamic Toggles creates static and dynamic toggles or accordions for El
 - Frontend JavaScript that works without Elementor being loaded.
 - Defensive provider handling so missing ACF, Meta Box, Pods, or Elementor dependencies do not fatal the site.
 
+
+## Good Karma Donation
+If you found this free plugin to be useful, please consider donating to the dhamma.org Vipassana Meditation organization founded by Sri S.N. Goenka. They provide free meditation retreats to help people ease their suffering and purify their minds, and they operate purely on volunteer work and donations. I will upload my donation receipts on an appropriate cadence if you go through my link, or you may donate directly by following instructions on <a href="https://www.dhamma.org/en/dana" target="_blank">this page</a>.
+
+
+[![Donate to dhamma.org](https://img.buymeacoffee.com/button-api/?text=Donate%20to%20dhamma.org&emoji=%E2%98%B8%EF%B8%8F&slug=aluma&button_colour=FF5F5F&font_colour=ffffff&font_family=Poppins&outline_colour=000000&coffee_colour=FFDD00)](https://www.buymeacoffee.com/aluma)
+
+
 ## Installation
 
 1. Upload `bodyloom-dynamic-toggles` to `/wp-content/plugins/`.
