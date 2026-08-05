@@ -70,6 +70,22 @@ class Provider_Factory
             return '';
         }
 
+        $value = self::walk_path($data, $path);
+
+        // Settings saved by earlier builds stored absolute paths that included
+        // ancestors which are not present in a row (field-group keys, or a
+        // seamless ACF clone that contributes no stored level). The trailing
+        // segment is the sub-field's own name, so retry on that alone.
+        if ('' === $value && false !== strpos($path, '/')) {
+            $segments = explode('/', $path);
+            $value = self::walk_path($data, end($segments));
+        }
+
+        return $value;
+    }
+
+    private static function walk_path($data, $path)
+    {
         $value = $data;
 
         foreach (explode('/', $path) as $part) {

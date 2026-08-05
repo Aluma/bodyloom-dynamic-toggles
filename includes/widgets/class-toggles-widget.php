@@ -1160,11 +1160,45 @@ class Toggles extends Widget_Base
         }
     }
 
+    /**
+     * Return the first non-empty setting from a list of control names.
+     *
+     * The sub-field controls were renamed across releases
+     * (acf_repeater_*_sub_field -> acf_*_field), so documents saved by an older
+     * build still carry the previous names. Reading every known name keeps those
+     * widgets rendering instead of silently emptying on upgrade.
+     *
+     * @param array $settings Widget settings.
+     * @param array $keys     Control names, newest first.
+     * @return string First non-empty value, or ''.
+     */
+    private function first_filled($settings, array $keys)
+    {
+        foreach ($keys as $key) {
+            if (!empty($settings[$key]) && is_string($settings[$key])) {
+                return $settings[$key];
+            }
+        }
+
+        return '';
+    }
+
     protected function get_dynamic_toggles($settings)
     {
-        $repeater_name = !empty($settings['acf_repeater_field_name']) ? $settings['acf_repeater_field_name'] : ($settings['acf_repeater_field_name_manual'] ?? '');
-        $title_field = !empty($settings['acf_title_field']) ? $settings['acf_title_field'] : ($settings['acf_title_field_manual'] ?? '');
-        $content_field = !empty($settings['acf_content_field']) ? $settings['acf_content_field'] : ($settings['acf_content_field_manual'] ?? '');
+        $repeater_name = $this->first_filled($settings, [
+            'acf_repeater_field_name',
+            'acf_repeater_field_name_manual',
+        ]);
+        $title_field = $this->first_filled($settings, [
+            'acf_title_field',
+            'acf_title_field_manual',
+            'acf_repeater_title_sub_field',
+        ]);
+        $content_field = $this->first_filled($settings, [
+            'acf_content_field',
+            'acf_content_field_manual',
+            'acf_repeater_content_sub_field',
+        ]);
 
         if (empty($repeater_name) || empty($title_field) || empty($content_field)) {
             return [];

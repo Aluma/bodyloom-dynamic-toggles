@@ -4,7 +4,7 @@ Tags: toggles, accordion, acf, metabox, pods
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,14 @@ Yes. Field pickers are provided where possible, but manual field-path fields rem
 8. Toggles advanced controls: `assets/screenshots/edit-bodyloom-toggles-advanced-panel.png`
 
 == Changelog ==
+
+= 1.1.1 =
+* Fixed ACF repeaters rendering blank titles and content. Rows were read via get_row(), which returns the unformatted value keyed by field key, so sub-field lookups by name always missed.
+* Fixed widgets losing their sub-field mapping on upgrade. The sub-field controls were renamed (acf_repeater_title_sub_field to acf_title_field), and the previous names are now read as a fallback.
+* Field paths may be given as either ACF field names or ACF field keys; keys are resolved to names before lookup.
+* Fixed paths that cross a seamless ACF clone field, which contributes no stored level of its own.
+* Fixed nested field paths whose parent is a repeater rather than a group, and paths deeper than two segments.
+* Field paths saved by version 1.0.x (bare repeater name and bare sub-field names) continue to resolve.
 
 = 1.1.0 =
 * Added editor field pickers with manual field-path fallbacks.
