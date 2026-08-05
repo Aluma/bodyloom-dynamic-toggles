@@ -3,8 +3,8 @@
  * Plugin Name: Bodyloom Dynamic Toggles
  * Plugin URI: https://github.com/aluma/bodyloom-dynamic-toggles
  * Description: Create accessible toggles and accordions from static content or dynamic repeater fields in ACF Pro, Meta Box, or Pods.
- * Version: 1.1.1
- * Requires at least: 5.0
+ * Version: 1.1.2
+ * Requires at least: 6.3
  * Tested up to: 7.0
  * Requires PHP: 7.4
  * Author: Jimmy Thanki
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('BODYLOOM_TOGGLES_VERSION', '1.1.1');
+define('BODYLOOM_TOGGLES_VERSION', '1.1.2');
 define('BODYLOOM_TOGGLES_PATH', plugin_dir_path(__FILE__));
 define('BODYLOOM_TOGGLES_URL', plugin_dir_url(__FILE__));
 
