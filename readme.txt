@@ -1,10 +1,10 @@
 === Bodyloom Dynamic Toggles ===
-Contributors: Jimmy Thanki
+Contributors: auralume
 Tags: toggles, accordion, acf, metabox, pods
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ Yes. Field pickers are provided where possible, but manual field-path fields rem
 8. Toggles advanced controls: `assets/screenshots/edit-bodyloom-toggles-advanced-panel.png`
 
 == Changelog ==
+
+= 1.1.3 =
+* Hardened the field-discovery REST endpoint. It now checks the edit capability of the post type being requested, rather than a blanket edit_posts check.
 
 = 1.1.2 =
 * Corrected the minimum WordPress version to 6.3. The block uses Block API v3, which is not available on earlier releases.

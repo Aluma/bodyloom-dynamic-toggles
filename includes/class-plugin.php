@@ -111,8 +111,18 @@ class Plugin
             [
                 'methods' => 'GET',
                 'callback' => [$this, 'get_field_discovery'],
-                'permission_callback' => function () {
-                    return current_user_can('edit_posts');
+                'permission_callback' => function (\WP_REST_Request $request) {
+                    // Field schemas are only exposed to users who can edit the
+                    // post type actually being asked about. A blanket edit_posts
+                    // check would let any contributor enumerate every post type.
+                    $post_type = sanitize_key((string) $request->get_param('post_type')) ?: 'post';
+                    $post_type_object = get_post_type_object($post_type);
+
+                    if (!$post_type_object || empty($post_type_object->cap->edit_posts)) {
+                        return false;
+                    }
+
+                    return current_user_can($post_type_object->cap->edit_posts);
                 },
                 'args' => [
                     'post_type' => [
