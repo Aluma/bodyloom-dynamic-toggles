@@ -42,4 +42,18 @@ class Legacy_Widget_Alias extends Toggles
     {
         return false;
     }
+
+    /**
+     * Elementor derives the wrapper class from get_name(), and the stylesheet
+     * scopes its CSS custom properties to that wrapper. Left alone, an aliased
+     * widget would render inside .elementor-widget-bodyloom-toggles, the
+     * variable block would never match, and --trigger-icon-size would resolve
+     * to nothing -- collapsing the plus/minus icons to zero size.
+     *
+     * Report the canonical class so wrapper-scoped styles apply.
+     */
+    public function get_html_wrapper_class()
+    {
+        return 'elementor-widget-' . parent::get_name();
+    }
 }
