@@ -2,9 +2,9 @@
     'use strict';
 
     var selectors = {
-        wrapper: '.bodyloom-toggles__list',
-        title: '.bodyloom-toggles__title',
-        content: '.bodyloom-toggles__content'
+        wrapper: '.vybose-repeater-accordion__list',
+        title: '.vybose-repeater-accordion__title',
+        content: '.vybose-repeater-accordion__content'
     };
 
     var activeClass = 'active-toggle';
@@ -33,12 +33,12 @@
     }
 
     function bindWrapper($wrapper, settings) {
-        if (!$wrapper.length || $wrapper.data('bodyloomTogglesBound')) {
+        if (!$wrapper.length || $wrapper.data('vyboseRepeaterAccordionBound')) {
             return;
         }
 
         settings = settings || {};
-        $wrapper.data('bodyloomTogglesBound', true);
+        $wrapper.data('vyboseRepeaterAccordionBound', true);
 
         $wrapper.find(selectors.title).each(function () {
             var $title = $(this);
@@ -48,7 +48,7 @@
             }
         });
 
-        $wrapper.on('click.bodyloomToggles', selectors.title, function (event) {
+        $wrapper.on('click.vyboseRepeaterAccordion', selectors.title, function (event) {
             event.preventDefault();
 
             var $clickedTitle = $(event.currentTarget);
@@ -68,7 +68,7 @@
             activateTab($wrapper, tabIndex, $clickedTitle);
         });
 
-        $wrapper.on('keydown.bodyloomToggles', selectors.title, function (event) {
+        $wrapper.on('keydown.vyboseRepeaterAccordion', selectors.title, function (event) {
             if (event.which === 13 || event.which === 32) {
                 event.preventDefault();
                 $(event.currentTarget).trigger('click');
@@ -120,7 +120,7 @@
             return;
         }
 
-        var BodyloomTogglesHandler = window.elementorModules.frontend.handlers.Base.extend({
+        var VyboseRepeaterAccordionHandler = window.elementorModules.frontend.handlers.Base.extend({
             onInit: function () {
                 window.elementorModules.frontend.handlers.Base.prototype.onInit.apply(this, arguments);
 
@@ -132,8 +132,8 @@
             }
         });
 
-        window.elementorFrontend.hooks.addAction('frontend/element_ready/bodyloom-toggles.default', function ($scope) {
-            new BodyloomTogglesHandler({ $element: $scope });
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/vybose-repeater-accordion.default', function ($scope) {
+            new VyboseRepeaterAccordionHandler({ $element: $scope });
         });
     });
 })(jQuery);

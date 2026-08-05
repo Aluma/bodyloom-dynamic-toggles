@@ -1,9 +1,9 @@
 <?php
-namespace Bodyloom\DynamicToggles;
+namespace Vybose\RepeaterAccordion;
 
-use Bodyloom\DynamicToggles\Providers\ACF_Provider;
-use Bodyloom\DynamicToggles\Providers\Metabox_Provider;
-use Bodyloom\DynamicToggles\Providers\Pods_Provider;
+use Vybose\RepeaterAccordion\Providers\ACF_Provider;
+use Vybose\RepeaterAccordion\Providers\Metabox_Provider;
+use Vybose\RepeaterAccordion\Providers\Pods_Provider;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -15,7 +15,7 @@ class Provider_Factory
     /**
      * Get the first active provider.
      *
-     * @return \Bodyloom\DynamicToggles\Interfaces\Field_Provider|null
+     * @return \Vybose\RepeaterAccordion\Interfaces\Field_Provider|null
      */
     public static function get_provider($source = '', $field_path = '')
     {

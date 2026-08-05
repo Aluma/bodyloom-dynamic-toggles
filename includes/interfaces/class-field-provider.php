@@ -1,5 +1,5 @@
 <?php
-namespace Bodyloom\DynamicToggles\Interfaces;
+namespace Vybose\RepeaterAccordion\Interfaces;
 
 if (!defined('ABSPATH')) {
     exit;

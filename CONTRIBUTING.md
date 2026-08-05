@@ -1,4 +1,4 @@
-# Contributing to Bodyloom Dynamic Toggles
+# Contributing to Vybose Repeater Accordion
 
 First off, thanks for taking the time to contribute! \U0001f389
 

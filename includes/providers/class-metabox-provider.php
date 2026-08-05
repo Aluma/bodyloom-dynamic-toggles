@@ -1,7 +1,7 @@
 <?php
-namespace Bodyloom\DynamicToggles\Providers;
+namespace Vybose\RepeaterAccordion\Providers;
 
-use Bodyloom\DynamicToggles\Interfaces\Field_Provider;
+use Vybose\RepeaterAccordion\Interfaces\Field_Provider;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -18,7 +18,7 @@ class Metabox_Provider implements Field_Provider
     public function get_repeater_data($post_id, $field_name, $title_field, $content_field)
     {
         $data = [];
-        $field_name = \Bodyloom\DynamicToggles\Provider_Factory::parse_source_path($field_name)['path'];
+        $field_name = \Vybose\RepeaterAccordion\Provider_Factory::parse_source_path($field_name)['path'];
 
         if (!$this->is_active()) {
             return $data;
@@ -30,8 +30,8 @@ class Metabox_Provider implements Field_Provider
         if (!empty($meta) && is_array($meta)) {
             foreach ($meta as $item) {
                 $data[] = [
-                    'toggle_title' => \Bodyloom\DynamicToggles\Provider_Factory::get_nested_value($item, $title_field, $field_name),
-                    'toggle_content' => \Bodyloom\DynamicToggles\Provider_Factory::get_nested_value($item, $content_field, $field_name),
+                    'toggle_title' => \Vybose\RepeaterAccordion\Provider_Factory::get_nested_value($item, $title_field, $field_name),
+                    'toggle_content' => \Vybose\RepeaterAccordion\Provider_Factory::get_nested_value($item, $content_field, $field_name),
                     'toggle_custom_id' => '',
                 ];
             }

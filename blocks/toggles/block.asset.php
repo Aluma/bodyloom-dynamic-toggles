@@ -14,5 +14,5 @@ return [
         'wp-i18n',
         'wp-server-side-render',
     ],
-    'version' => defined('BODYLOOM_TOGGLES_VERSION') ? BODYLOOM_TOGGLES_VERSION : '1.1.0',
+    'version' => defined('VYBOSE_REPEATER_ACCORDION_VERSION') ? VYBOSE_REPEATER_ACCORDION_VERSION : '1.1.0',
 ];

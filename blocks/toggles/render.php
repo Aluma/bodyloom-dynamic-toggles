@@ -9,25 +9,25 @@ if (!defined('ABSPATH')) {
  * @return string Block output.
  */
 
-$bodyloom_repeater_field = !empty($attributes['repeater_field']) ? $attributes['repeater_field'] : ($attributes['repeater_field_manual'] ?? '');
-$bodyloom_title_field = !empty($attributes['title_field']) ? $attributes['title_field'] : ($attributes['title_field_manual'] ?? '');
-$bodyloom_content_field = !empty($attributes['content_field']) ? $attributes['content_field'] : ($attributes['content_field_manual'] ?? '');
-$bodyloom_source = $attributes['source'] ?? '';
+$vybose_repeater_field = !empty($attributes['repeater_field']) ? $attributes['repeater_field'] : ($attributes['repeater_field_manual'] ?? '');
+$vybose_title_field = !empty($attributes['title_field']) ? $attributes['title_field'] : ($attributes['title_field_manual'] ?? '');
+$vybose_content_field = !empty($attributes['content_field']) ? $attributes['content_field'] : ($attributes['content_field_manual'] ?? '');
+$vybose_source = $attributes['source'] ?? '';
 
-if (empty($bodyloom_repeater_field) || empty($bodyloom_title_field) || empty($bodyloom_content_field)) {
-    return '<div class="bodyloom-toggles-placeholder">' . esc_html__('Please configure the Dynamic Toggles block.', 'bodyloom-dynamic-toggles') . '</div>';
+if (empty($vybose_repeater_field) || empty($vybose_title_field) || empty($vybose_content_field)) {
+    return '<div class="vybose-repeater-accordion-placeholder">' . esc_html__('Please configure the Dynamic Toggles block.', 'vybose-repeater-accordion') . '</div>';
 }
 
-$plugin = \Bodyloom\DynamicToggles\Plugin::get_instance();
+$plugin = \Vybose\RepeaterAccordion\Plugin::get_instance();
 $post_id = get_the_ID();
-$bodyloom_toggles = $plugin->get_dynamic_data($post_id, $bodyloom_repeater_field, $bodyloom_title_field, $bodyloom_content_field, $bodyloom_source);
+$vybose_repeater_accordion = $plugin->get_dynamic_data($post_id, $vybose_repeater_field, $vybose_title_field, $vybose_content_field, $vybose_source);
 
-if (empty($bodyloom_toggles)) {
-    return '<div class="bodyloom-toggles-empty">' . esc_html__('No data found for the specified repeater field.', 'bodyloom-dynamic-toggles') . '</div>';
+if (empty($vybose_repeater_accordion)) {
+    return '<div class="vybose-repeater-accordion-empty">' . esc_html__('No data found for the specified repeater field.', 'vybose-repeater-accordion') . '</div>';
 }
 
 // Prepare view data
-$bodyloom_view_data = [
+$vybose_view_data = [
     'id' => 'block-' . uniqid(),
     'settings' => [
         'type' => $attributes['type'],
@@ -36,13 +36,13 @@ $bodyloom_view_data = [
         'style' => $attributes['style'],
         'default_toggle' => $attributes['open_first'] ? 1 : 0,
     ],
-    'toggles' => $bodyloom_toggles,
+    'toggles' => $vybose_repeater_accordion,
 ];
 
 // Enqueue assets
-wp_enqueue_style('bodyloom-toggles');
-wp_enqueue_script('bodyloom-toggles');
+wp_enqueue_style('vybose-repeater-accordion');
+wp_enqueue_script('vybose-repeater-accordion');
 
 ob_start();
-include BODYLOOM_TOGGLES_PATH . 'templates/toggles-view.php';
+include VYBOSE_REPEATER_ACCORDION_PATH . 'templates/toggles-view.php';
 return ob_get_clean();

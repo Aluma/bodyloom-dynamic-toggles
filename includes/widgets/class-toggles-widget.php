@@ -1,5 +1,5 @@
 <?php
-namespace Bodyloom\DynamicToggles\Widgets;
+namespace Vybose\RepeaterAccordion\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -10,7 +10,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Icons_Manager;
 use Elementor\Utils;
-use Bodyloom\DynamicToggles\Field_Discovery;
+use Vybose\RepeaterAccordion\Field_Discovery;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -21,12 +21,12 @@ class Toggles extends Widget_Base
 
     public function get_name()
     {
-        return 'bodyloom-toggles';
+        return 'vybose-repeater-accordion';
     }
 
     public function get_title()
     {
-        return esc_html__('Bodyloom Toggles', 'bodyloom-dynamic-toggles');
+        return esc_html__('Vybose Repeater Accordion', 'vybose-repeater-accordion');
     }
 
     public function get_icon()
@@ -41,12 +41,12 @@ class Toggles extends Widget_Base
 
     public function get_script_depends()
     {
-        return ['bodyloom-toggles'];
+        return ['vybose-repeater-accordion'];
     }
 
     public function get_style_depends()
     {
-        return ['bodyloom-toggles'];
+        return ['vybose-repeater-accordion'];
     }
 
     protected function is_dynamic_content(): bool
@@ -59,23 +59,23 @@ class Toggles extends Widget_Base
         $this->start_controls_section(
             'section_content',
             [
-                'label' => esc_html__('Toggles', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Toggles', 'vybose-repeater-accordion'),
             ]
         );
 
         $this->add_control(
             'type',
             [
-                'label' => esc_html__('Type', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Type', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::CHOOSE,
                 'default' => 'toggles',
                 'options' => [
                     'toggles' => [
-                        'title' => esc_html__('Toggles', 'bodyloom-dynamic-toggles'),
+                        'title' => esc_html__('Toggles', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-toggle',
                     ],
                     'accordion' => [
-                        'title' => esc_html__('Accordion', 'bodyloom-dynamic-toggles'),
+                        'title' => esc_html__('Accordion', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-accordion',
                     ],
                 ],
@@ -88,24 +88,24 @@ class Toggles extends Widget_Base
         $this->add_control(
             'data_source',
             [
-                'label' => esc_html__('Data Source', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Data Source', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::CHOOSE,
                 'default' => 'static',
                 'options' => [
                     'static' => [
-                        'title' => esc_html__('Static', 'bodyloom-dynamic-toggles'),
+                        'title' => esc_html__('Static', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-edit',
                     ],
                     'acf_repeater' => [
-                        'title' => esc_html__('ACF Repeater', 'bodyloom-dynamic-toggles'),
+                        'title' => esc_html__('ACF Repeater', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-database',
                     ],
                     'pods_repeater' => [
-                        'title' => esc_html__('Pods', 'bodyloom-dynamic-toggles'),
+                        'title' => esc_html__('Pods', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-database',
                     ],
                     'metabox_repeater' => [
-                        'title' => esc_html__('Meta Box', 'bodyloom-dynamic-toggles'),
+                        'title' => esc_html__('Meta Box', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-database',
                     ],
                 ],
@@ -119,9 +119,9 @@ class Toggles extends Widget_Base
         $repeater->add_control(
             'toggle_title',
             [
-                'label' => esc_html__('Title', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Title', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::TEXT,
-                'default' => esc_html__('Toggle Title', 'bodyloom-dynamic-toggles'),
+                'default' => esc_html__('Toggle Title', 'vybose-repeater-accordion'),
                 'dynamic' => ['active' => true],
                 'label_block' => true,
             ]
@@ -130,9 +130,9 @@ class Toggles extends Widget_Base
         $repeater->add_control(
             'toggle_content',
             [
-                'label' => esc_html__('Content', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Content', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::WYSIWYG,
-                'default' => esc_html__('Toggle Content', 'bodyloom-dynamic-toggles'),
+                'default' => esc_html__('Toggle Content', 'vybose-repeater-accordion'),
                 'show_label' => false,
             ]
         );
@@ -140,27 +140,27 @@ class Toggles extends Widget_Base
         $repeater->add_control(
             'toggle_custom_id',
             [
-                'label' => esc_html__('Custom ID', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Custom ID', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::TEXT,
                 'placeholder' => 'my-toggle-id',
-                'description' => esc_html__('Add a custom ID for deep linking (e.g., #my-toggle-id).', 'bodyloom-dynamic-toggles'),
+                'description' => esc_html__('Add a custom ID for deep linking (e.g., #my-toggle-id).', 'vybose-repeater-accordion'),
             ]
         );
 
         $this->add_control(
             'toggles',
             [
-                'label' => esc_html__('Items', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Items', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
                 'default' => [
                     [
-                        'toggle_title' => esc_html__('Item #1', 'bodyloom-dynamic-toggles'),
-                        'toggle_content' => esc_html__('Lorem ipsum dolor sit amet.', 'bodyloom-dynamic-toggles'),
+                        'toggle_title' => esc_html__('Item #1', 'vybose-repeater-accordion'),
+                        'toggle_content' => esc_html__('Lorem ipsum dolor sit amet.', 'vybose-repeater-accordion'),
                     ],
                     [
-                        'toggle_title' => esc_html__('Item #2', 'bodyloom-dynamic-toggles'),
-                        'toggle_content' => esc_html__('Lorem ipsum dolor sit amet.', 'bodyloom-dynamic-toggles'),
+                        'toggle_title' => esc_html__('Item #2', 'vybose-repeater-accordion'),
+                        'toggle_content' => esc_html__('Lorem ipsum dolor sit amet.', 'vybose-repeater-accordion'),
                     ],
                 ],
                 'title_field' => '{{{ toggle_title }}}',
@@ -175,7 +175,7 @@ class Toggles extends Widget_Base
             'acf_repeater_notice',
             [
                 'type' => Controls_Manager::RAW_HTML,
-                'raw' => esc_html__('Choose a discovered field when available, or use the manual path fallback.', 'bodyloom-dynamic-toggles'),
+                'raw' => esc_html__('Choose a discovered field when available, or use the manual path fallback.', 'vybose-repeater-accordion'),
                 'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
                 'condition' => ['data_source!' => 'static'],
             ]
@@ -184,10 +184,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'acf_repeater_field_name',
             [
-                'label' => esc_html__('Repeater Field Path', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Repeater Field Path', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::SELECT2,
                 'options' => Field_Discovery::get_repeater_options(get_post_type() ?: 'post'),
-                'description' => esc_html__('Supports nested paths such as parent_group/repeater_name.', 'bodyloom-dynamic-toggles'),
+                'description' => esc_html__('Supports nested paths such as parent_group/repeater_name.', 'vybose-repeater-accordion'),
                 'condition' => ['data_source!' => 'static'],
             ]
         );
@@ -195,7 +195,7 @@ class Toggles extends Widget_Base
         $this->add_control(
             'acf_repeater_field_name_manual',
             [
-                'label' => esc_html__('Manual Repeater Field Path', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Manual Repeater Field Path', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::TEXT,
                 'condition' => ['data_source!' => 'static'],
             ]
@@ -204,7 +204,7 @@ class Toggles extends Widget_Base
         $this->add_control(
             'acf_title_field',
             [
-                'label' => esc_html__('Title Sub-Field', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Title Sub-Field', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::SELECT2,
                 'options' => Field_Discovery::get_leaf_field_options(get_post_type() ?: 'post'),
                 'condition' => ['data_source!' => 'static'],
@@ -214,7 +214,7 @@ class Toggles extends Widget_Base
         $this->add_control(
             'acf_title_field_manual',
             [
-                'label' => esc_html__('Manual Title Sub-Field', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Manual Title Sub-Field', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::TEXT,
                 'condition' => ['data_source!' => 'static'],
             ]
@@ -223,7 +223,7 @@ class Toggles extends Widget_Base
         $this->add_control(
             'acf_content_field',
             [
-                'label' => esc_html__('Content Sub-Field', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Content Sub-Field', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::SELECT2,
                 'options' => Field_Discovery::get_leaf_field_options(get_post_type() ?: 'post'),
                 'condition' => ['data_source!' => 'static'],
@@ -233,7 +233,7 @@ class Toggles extends Widget_Base
         $this->add_control(
             'acf_content_field_manual',
             [
-                'label' => esc_html__('Manual Content Sub-Field', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Manual Content Sub-Field', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::TEXT,
                 'condition' => ['data_source!' => 'static'],
             ]
@@ -242,7 +242,7 @@ class Toggles extends Widget_Base
         $this->add_control(
             'title_html_tag',
             [
-                'label' => esc_html__('Title HTML Tag', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Title HTML Tag', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::SELECT,
                 'options' => [
                     'h1' => 'H1',
@@ -261,7 +261,7 @@ class Toggles extends Widget_Base
         $this->add_control(
             'faq_schema',
             [
-                'label' => esc_html__('FAQ Schema', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('FAQ Schema', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::SWITCHER,
             ]
         );
@@ -269,11 +269,11 @@ class Toggles extends Widget_Base
         $this->add_control(
             'default_toggle',
             [
-                'label' => esc_html__('Active Toggle', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Active Toggle', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 1,
                 'default' => 0,
-                'description' => esc_html__('Enter the number of the item to be active by default (e.g. 1). Set to 0 to keep all closed.', 'bodyloom-dynamic-toggles'),
+                'description' => esc_html__('Enter the number of the item to be active by default (e.g. 1). Set to 0 to keep all closed.', 'vybose-repeater-accordion'),
                 'render_type' => 'template',
             ]
         );
@@ -281,7 +281,7 @@ class Toggles extends Widget_Base
         $this->add_control(
             'trigger_icon',
             [
-                'label' => esc_html__('Icon', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Icon', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::ICONS,
                 'default' => [
                     'value' => 'fas fa-plus',
@@ -293,7 +293,7 @@ class Toggles extends Widget_Base
         $this->add_control(
             'trigger_active_icon',
             [
-                'label' => esc_html__('Active Icon', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Active Icon', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::ICONS,
                 'default' => [
                     'value' => 'fas fa-minus',
@@ -311,7 +311,7 @@ class Toggles extends Widget_Base
         $this->start_controls_section(
             'section_style_item',
             [
-                'label' => esc_html__('Item', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Item', 'vybose-repeater-accordion'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -319,7 +319,7 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'item_space_between',
             [
-                'label' => esc_html__('Space Between', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Space Between', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -327,8 +327,8 @@ class Toggles extends Widget_Base
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .bodyloom-toggles__item:last-child' => 'margin-bottom: 0;',
+                    '{{WRAPPER}} .vybose-repeater-accordion__item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__item:last-child' => 'margin-bottom: 0;',
                 ],
             ]
         );
@@ -337,7 +337,7 @@ class Toggles extends Widget_Base
             Group_Control_Border::get_type(),
             [
                 'name' => 'item_border',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__item',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__item',
                 'separator' => 'before',
             ]
         );
@@ -345,11 +345,11 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'item_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Radius', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -358,7 +358,7 @@ class Toggles extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'item_box_shadow',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__item',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__item',
             ]
         );
 
@@ -368,7 +368,7 @@ class Toggles extends Widget_Base
         $this->start_controls_section(
             'section_style_title',
             [
-                'label' => esc_html__('Title', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Title', 'vybose-repeater-accordion'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -377,7 +377,7 @@ class Toggles extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'title_typography',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__title',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__title',
             ]
         );
 
@@ -386,17 +386,17 @@ class Toggles extends Widget_Base
         // Normal
         $this->start_controls_tab(
             'title_colors_normal',
-            ['label' => esc_html__('Normal', 'bodyloom-dynamic-toggles')]
+            ['label' => esc_html__('Normal', 'vybose-repeater-accordion')]
         );
 
         $this->add_control(
             'title_color',
             [
-                'label' => esc_html__('Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .bodyloom-toggles__title-link' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title-link' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -404,10 +404,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'title_bg_color',
             [
-                'label' => esc_html__('Background', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Background', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -415,10 +415,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'title_bd_color',
             [
-                'label' => esc_html__('Border Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title' => 'border-color: {{VALUE}};',
                 ],
                 'condition' => ['title_border_border!' => ''],
             ]
@@ -427,11 +427,11 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'title_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Radius', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -440,7 +440,7 @@ class Toggles extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'title_box_shadow',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__title',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__title',
             ]
         );
 
@@ -448,7 +448,7 @@ class Toggles extends Widget_Base
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'title_shadow',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__title-text',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__title-text',
             ]
         );
 
@@ -457,17 +457,17 @@ class Toggles extends Widget_Base
         // Hover
         $this->start_controls_tab(
             'title_colors_hover',
-            ['label' => esc_html__('Hover', 'bodyloom-dynamic-toggles')]
+            ['label' => esc_html__('Hover', 'vybose-repeater-accordion')]
         );
 
         $this->add_control(
             'title_color_hover',
             [
-                'label' => esc_html__('Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title:hover' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .bodyloom-toggles__title:hover .bodyloom-toggles__title-link' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title:hover' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title:hover .vybose-repeater-accordion__title-link' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -475,10 +475,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'title_bg_color_hover',
             [
-                'label' => esc_html__('Background', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Background', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title:hover' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title:hover' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -486,10 +486,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'title_bd_color_hover',
             [
-                'label' => esc_html__('Border Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title:hover' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title:hover' => 'border-color: {{VALUE}};',
                 ],
                 'condition' => ['title_border_border!' => ''],
             ]
@@ -498,11 +498,11 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'title_border_radius_hover',
             [
-                'label' => esc_html__('Border Radius', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Radius', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -511,7 +511,7 @@ class Toggles extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'title_box_shadow_hover',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__title:hover',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__title:hover',
             ]
         );
 
@@ -519,7 +519,7 @@ class Toggles extends Widget_Base
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'title_text_shadow_hover',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__title:hover .bodyloom-toggles__title-text',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__title:hover .vybose-repeater-accordion__title-text',
             ]
         );
 
@@ -528,17 +528,17 @@ class Toggles extends Widget_Base
         // Active
         $this->start_controls_tab(
             'title_colors_active',
-            ['label' => esc_html__('Active', 'bodyloom-dynamic-toggles')]
+            ['label' => esc_html__('Active', 'vybose-repeater-accordion')]
         );
 
         $this->add_control(
             'title_color_active',
             [
-                'label' => esc_html__('Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle' => 'color: {{VALUE}};',
-                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle .bodyloom-toggles__title-link' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title.active-toggle' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title.active-toggle .vybose-repeater-accordion__title-link' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -546,10 +546,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'title_bg_color_active',
             [
-                'label' => esc_html__('Background', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Background', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title.active-toggle' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -557,10 +557,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'title_bd_color_active',
             [
-                'label' => esc_html__('Border Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title.active-toggle' => 'border-color: {{VALUE}};',
                 ],
                 'condition' => ['title_border_border!' => ''],
             ]
@@ -569,11 +569,11 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'title_border_radius_active',
             [
-                'label' => esc_html__('Border Radius', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Radius', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title.active-toggle' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -582,7 +582,7 @@ class Toggles extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'title_box_shadow_active',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__title.active-toggle',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__title.active-toggle',
             ]
         );
 
@@ -590,7 +590,7 @@ class Toggles extends Widget_Base
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'title_text_shadow_active',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__title.active-toggle .bodyloom-toggles__title-text',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__title.active-toggle .vybose-repeater-accordion__title-text',
             ]
         );
 
@@ -600,11 +600,11 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'title_padding',
             [
-                'label' => esc_html__('Padding', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Padding', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
                 'separator' => 'before',
             ]
@@ -614,8 +614,8 @@ class Toggles extends Widget_Base
             Group_Control_Border::get_type(),
             [
                 'name' => 'title_border',
-                'label' => esc_html__('Border', 'bodyloom-dynamic-toggles'),
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__title',
+                'label' => esc_html__('Border', 'vybose-repeater-accordion'),
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__title',
             ]
         );
 
@@ -625,7 +625,7 @@ class Toggles extends Widget_Base
         $this->start_controls_section(
             'section_style_trigger',
             [
-                'label' => esc_html__('Trigger', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Trigger', 'vybose-repeater-accordion'),
                 'tab' => Controls_Manager::TAB_STYLE,
                 'condition' => ['trigger_icon[value]!' => ''],
             ]
@@ -634,31 +634,31 @@ class Toggles extends Widget_Base
         $this->add_control(
             'trigger_icon_view',
             [
-                'label' => __('View', 'bodyloom-dynamic-toggles'),
+                'label' => __('View', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::CHOOSE, // Using CHOOSE as pseudo-buttons for Default/Stacked/Framed
                 'options' => [
                     'default' => [
-                        'title' => __('Default', 'bodyloom-dynamic-toggles'),
+                        'title' => __('Default', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-ban', // No surrounding
                     ],
                     'stacked' => [
-                        'title' => __('Stacked', 'bodyloom-dynamic-toggles'),
+                        'title' => __('Stacked', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-circle',
                     ],
                     'framed' => [
-                        'title' => __('Framed', 'bodyloom-dynamic-toggles'),
+                        'title' => __('Framed', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-square',
                     ],
                 ],
                 'default' => 'default',
-                'prefix_class' => 'bodyloom-trigger-view-',
+                'prefix_class' => 'vybose-trigger-view-',
             ]
         );
 
         $this->add_responsive_control(
             'trigger_icon_size',
             [
-                'label' => __('Size', 'bodyloom-dynamic-toggles'),
+                'label' => __('Size', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px', 'em'],
                 'range' => [
@@ -677,16 +677,16 @@ class Toggles extends Widget_Base
 
         $this->start_controls_tab(
             'trigger_icon_colors_normal',
-            ['label' => esc_html__('Normal', 'bodyloom-dynamic-toggles')]
+            ['label' => esc_html__('Normal', 'vybose-repeater-accordion')]
         );
 
         $this->add_control(
             'trigger_icon_color',
             [
-                'label' => esc_html__('Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__trigger' => 'color: {{VALUE}}; fill: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__trigger' => 'color: {{VALUE}}; fill: {{VALUE}};',
                 ],
             ]
         );
@@ -694,10 +694,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'trigger_icon_bg_color',
             [
-                'label' => esc_html__('Background', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Background', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__trigger' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__trigger' => 'background-color: {{VALUE}};',
                 ],
                 'condition' => ['trigger_icon_view!' => 'default'],
             ]
@@ -706,10 +706,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'trigger_icon_bd_color',
             [
-                'label' => esc_html__('Border Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__trigger' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__trigger' => 'border-color: {{VALUE}};',
                 ],
                 'condition' => ['trigger_icon_view' => 'framed'],
             ]
@@ -719,16 +719,16 @@ class Toggles extends Widget_Base
 
         $this->start_controls_tab(
             'trigger_icon_colors_hover',
-            ['label' => esc_html__('Hover', 'bodyloom-dynamic-toggles')]
+            ['label' => esc_html__('Hover', 'vybose-repeater-accordion')]
         );
 
         $this->add_control(
             'trigger_icon_color_hover',
             [
-                'label' => esc_html__('Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title:hover .bodyloom-toggles__trigger' => 'color: {{VALUE}}; fill: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title:hover .vybose-repeater-accordion__trigger' => 'color: {{VALUE}}; fill: {{VALUE}};',
                 ],
             ]
         );
@@ -736,10 +736,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'trigger_icon_bg_color_hover',
             [
-                'label' => esc_html__('Background', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Background', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title:hover .bodyloom-toggles__trigger' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title:hover .vybose-repeater-accordion__trigger' => 'background-color: {{VALUE}};',
                 ],
                 'condition' => ['trigger_icon_view!' => 'default'],
             ]
@@ -748,10 +748,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'trigger_icon_bd_color_hover',
             [
-                'label' => esc_html__('Border Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title:hover .bodyloom-toggles__trigger' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title:hover .vybose-repeater-accordion__trigger' => 'border-color: {{VALUE}};',
                 ],
                 'condition' => ['trigger_icon_view' => 'framed'],
             ]
@@ -761,16 +761,16 @@ class Toggles extends Widget_Base
 
         $this->start_controls_tab(
             'trigger_icon_colors_active',
-            ['label' => esc_html__('Active', 'bodyloom-dynamic-toggles')]
+            ['label' => esc_html__('Active', 'vybose-repeater-accordion')]
         );
 
         $this->add_control(
             'trigger_icon_color_active',
             [
-                'label' => esc_html__('Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle .bodyloom-toggles__trigger' => 'color: {{VALUE}}; fill: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title.active-toggle .vybose-repeater-accordion__trigger' => 'color: {{VALUE}}; fill: {{VALUE}};',
                 ],
             ]
         );
@@ -778,10 +778,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'trigger_icon_bg_color_active',
             [
-                'label' => esc_html__('Background', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Background', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle .bodyloom-toggles__trigger' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title.active-toggle .vybose-repeater-accordion__trigger' => 'background-color: {{VALUE}};',
                 ],
                 'condition' => ['trigger_icon_view!' => 'default'],
             ]
@@ -790,10 +790,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'trigger_icon_bd_color_active',
             [
-                'label' => esc_html__('Border Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__title.active-toggle .bodyloom-toggles__trigger' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__title.active-toggle .vybose-repeater-accordion__trigger' => 'border-color: {{VALUE}};',
                 ],
                 'condition' => ['trigger_icon_view' => 'framed'],
             ]
@@ -805,12 +805,12 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'trigger_icon_padding',
             [
-                'label' => esc_html__('Padding', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Padding', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'separator' => 'before',
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__trigger' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__trigger' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
                 'condition' => ['trigger_icon_view!' => 'default'],
             ]
@@ -819,11 +819,11 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'trigger_icon_bd_width',
             [
-                'label' => esc_html__('Border Width', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Width', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px'],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__trigger' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; border-style: solid;',
+                    '{{WRAPPER}} .vybose-repeater-accordion__trigger' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; border-style: solid;',
                 ],
                 'condition' => ['trigger_icon_view' => 'framed'],
             ]
@@ -832,11 +832,11 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'trigger_icon_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Radius', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__trigger' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__trigger' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
                 'condition' => ['trigger_icon_view!' => 'default'],
             ]
@@ -846,7 +846,7 @@ class Toggles extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'trigger_icon_box_shadow',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__trigger',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__trigger',
                 'condition' => ['trigger_icon_view!' => 'default'],
             ]
         );
@@ -855,7 +855,7 @@ class Toggles extends Widget_Base
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'trigger_icon_shadow',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__trigger',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__trigger',
             ]
         );
 
@@ -865,7 +865,7 @@ class Toggles extends Widget_Base
         $this->start_controls_section(
             'section_style_content',
             [
-                'label' => esc_html__('Content', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Content', 'vybose-repeater-accordion'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -873,26 +873,26 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'content_alignment',
             [
-                'label' => esc_html__('Alignment', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Alignment', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => esc_html__('Left', 'bodyloom-dynamic-toggles'),
+                        'title' => esc_html__('Left', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__('Center', 'bodyloom-dynamic-toggles'),
+                        'title' => esc_html__('Center', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-text-align-center',
                     ],
                     'right' => [
-                        'title' => esc_html__('Right', 'bodyloom-dynamic-toggles'),
+                        'title' => esc_html__('Right', 'vybose-repeater-accordion'),
                         'icon' => 'eicon-text-align-right',
                     ],
                 ],
                 'default' => 'left',
                 'prefix_class' => 'elementor-align-', // Changed from selectors to prefix_class or use selector on content
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__content' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__content' => 'text-align: {{VALUE}};',
                 ],
             ]
         );
@@ -901,17 +901,17 @@ class Toggles extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'content_typography',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__content',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__content',
             ]
         );
 
         $this->add_control(
             'content_color',
             [
-                'label' => esc_html__('Color', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Color', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__content' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__content' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -919,10 +919,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'content_link_hover',
             [
-                'label' => esc_html__('Link Hover', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Link Hover', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__content a:hover' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__content a:hover' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -930,10 +930,10 @@ class Toggles extends Widget_Base
         $this->add_control(
             'content_background_color',
             [
-                'label' => esc_html__('Background', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Background', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__content' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__content' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -941,11 +941,11 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'toggles_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Radius', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -954,7 +954,7 @@ class Toggles extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'toggles_box_shadow',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__item',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__item',
             ]
         );
 
@@ -962,14 +962,14 @@ class Toggles extends Widget_Base
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'content_shadow',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__content',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__content',
             ]
         );
 
         $this->add_responsive_control(
             'content_gap',
             [
-                'label' => esc_html__('Gap', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Gap', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -978,7 +978,7 @@ class Toggles extends Widget_Base
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__content' => 'margin-top: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__content' => 'margin-top: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -986,11 +986,11 @@ class Toggles extends Widget_Base
         $this->add_responsive_control(
             'content_padding',
             [
-                'label' => esc_html__('Padding', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Padding', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -999,19 +999,19 @@ class Toggles extends Widget_Base
             Group_Control_Border::get_type(),
             [
                 'name' => 'content_border',
-                'label' => esc_html__('Border', 'bodyloom-dynamic-toggles'),
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__content',
+                'label' => esc_html__('Border', 'vybose-repeater-accordion'),
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__content',
             ]
         );
 
         $this->add_responsive_control(
             'content_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'bodyloom-dynamic-toggles'),
+                'label' => esc_html__('Border Radius', 'vybose-repeater-accordion'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .bodyloom-toggles__content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .vybose-repeater-accordion__content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1020,7 +1020,7 @@ class Toggles extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'content_box_shadow',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__content',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__content',
             ]
         );
 
@@ -1028,7 +1028,7 @@ class Toggles extends Widget_Base
             Group_Control_Text_Shadow::get_type(),
             [
                 'name' => 'content_shadow',
-                'selector' => '{{WRAPPER}} .bodyloom-toggles__content',
+                'selector' => '{{WRAPPER}} .vybose-repeater-accordion__content',
             ]
         );
 
@@ -1051,7 +1051,7 @@ class Toggles extends Widget_Base
         }
 
         $id_int = substr($this->get_id_int(), 0, 3);
-        $widget_class = 'bodyloom-toggles';
+        $widget_class = 'vybose-repeater-accordion';
 
         echo '<div class="' . esc_attr($widget_class . '__list') . '" data-type="' . esc_attr($settings['type']) . '" data-default-toggle="' . esc_attr((string) $settings['default_toggle']) . '">';
 
@@ -1215,7 +1215,7 @@ class Toggles extends Widget_Base
             $source = 'metabox';
         }
 
-        $provider = \Bodyloom\DynamicToggles\Provider_Factory::get_provider($source, $repeater_name);
+        $provider = \Vybose\RepeaterAccordion\Provider_Factory::get_provider($source, $repeater_name);
 
         if (!$provider) {
             return [];

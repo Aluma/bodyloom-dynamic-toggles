@@ -1,6 +1,6 @@
 {
 	"apiVersion": 3,
-	"name": "bodyloom/dynamic-toggles",
+	"name": "vybose/repeater-accordion",
 	"version": "1.1.0",
 	"title": "Dynamic Toggles",
 	"category": "widgets",
@@ -9,7 +9,7 @@
 	"supports": {
 		"html": false
 	},
-	"textdomain": "bodyloom-dynamic-toggles",
+	"textdomain": "vybose-repeater-accordion",
 	"editorScript": "file:./block.js",
 	"render": "file:./render.php",
 	"attributes": {

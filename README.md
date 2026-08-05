@@ -1,4 +1,4 @@
-# Bodyloom Dynamic Toggles
+# Vybose Repeater Accordion
 
 **Contributors:** Jimmy Thanki  
 **Tags:** toggles, accordion, acf, metabox, pods  
@@ -8,7 +8,7 @@
 **Stable tag:** 1.1.0  
 **License:** GPLv2 or later  
 
-Bodyloom Dynamic Toggles creates static and dynamic toggles or accordions for Elementor, the Block Editor, and shortcodes.
+Vybose Repeater Accordion creates static and dynamic toggles or accordions for Elementor, the Block Editor, and shortcodes.
 
 ## Features
 
@@ -33,20 +33,20 @@ If you found this free plugin to be useful, please consider donating to the dham
 
 ## Installation
 
-1. Upload `bodyloom-dynamic-toggles` to `/wp-content/plugins/`.
+1. Upload `vybose-repeater-accordion` to `/wp-content/plugins/`.
 2. Activate the plugin in WordPress.
-3. Add the Bodyloom Toggles widget, Dynamic Toggles block, or shortcode.
+3. Add the Vybose Repeater Accordion widget, Dynamic Toggles block, or shortcode.
 
 ## Usage
 
-Elementor: use the "Bodyloom Toggles" widget. Choose Static for hand-authored items or Dynamic for ACF Pro, Meta Box, or Pods repeater data.
+Elementor: use the "Vybose Repeater Accordion" widget. Choose Static for hand-authored items or Dynamic for ACF Pro, Meta Box, or Pods repeater data.
 
 Block Editor: use the "Dynamic Toggles" block and configure the source, repeater field, title field, content field, and interaction mode.
 
 Shortcode:
 
 ```text
-[bodyloom_toggles src="acf" repeater="my_repeater" title_field="question" content_field="answer" type="accordion"]
+[vybose_repeater_accordion src="acf" repeater="my_repeater" title_field="question" content_field="answer" type="accordion"]
 ```
 
 Field pickers are convenience controls. Manual fields remain available for compatibility, nested field paths, and providers or field layouts that cannot be discovered safely.
@@ -55,35 +55,35 @@ Field pickers are convenience controls. Manual fields remain available for compa
 
 *Rendered Accordion Example*
 
-![Rendered Accordion Example](assets/screenshots/bodyloom-dynamic-toggles-accordion-rendered.jpg)
+![Rendered Accordion Example](assets/screenshots/vybose-repeater-accordion-accordion-rendered.jpg)
 
 *Elementor Elements Panel*
 
-![Elementor Elements Panel](assets/screenshots/elementor-elements-panel-bodyloom-icon-list-and-toggles-plugins.png)
+![Elementor Elements Panel](assets/screenshots/elementor-elements-panel-vybose-icon-list-and-toggles-plugins.png)
 
 *Content Edit Panel*
 
-![Content Edit Panel](assets/screenshots/edit-bodyloom-toggles-content-panel-1.png)
+![Content Edit Panel](assets/screenshots/edit-vybose-repeater-accordion-content-panel-1.png)
 
-![Content Edit Panel](assets/screenshots/edit-bodyloom-toggles-content-panel-2.png)
+![Content Edit Panel](assets/screenshots/edit-vybose-repeater-accordion-content-panel-2.png)
 
 *ACF Repeater*
 
-![ACF Repeater Support](assets/screenshots/edit-bodyloom-toggles-content-panel-acf-repeater.png)
+![ACF Repeater Support](assets/screenshots/edit-vybose-repeater-accordion-content-panel-acf-repeater.png)
 
 
 *Pods*
 
-![Pods Support](assets/screenshots/edit-bodyloom-toggles-content-panel-pods.png)
+![Pods Support](assets/screenshots/edit-vybose-repeater-accordion-content-panel-pods.png)
 
 
 *Meta Box*
 
-![Meta Box Support](assets/screenshots/edit-bodyloom-toggles-content-panel-meta-box.png)
+![Meta Box Support](assets/screenshots/edit-vybose-repeater-accordion-content-panel-meta-box.png)
 
 *Advanced Edit Panel*
 
-![Advanced Edit Panel](assets/screenshots/edit-bodyloom-toggles-advanced-panel.png)
+![Advanced Edit Panel](assets/screenshots/edit-vybose-repeater-accordion-advanced-panel.png)
 
 
 ## Changelog

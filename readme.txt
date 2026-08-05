@@ -1,10 +1,10 @@
-=== Bodyloom Dynamic Toggles ===
+=== Vybose Repeater Accordion ===
 Contributors: auralume
 Tags: toggles, accordion, acf, metabox, pods
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.3
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Create static and dynamic toggles or accordions for Elementor, the Block Editor,
 
 == Description ==
 
-Bodyloom Dynamic Toggles displays static toggle items or dynamic accordion content from ACF Pro, Meta Box, and Pods repeater-style fields. It includes an Elementor widget, a dynamic block, and a shortcode so the same toggle content pattern can be used across page builders and native WordPress content.
+Vybose Repeater Accordion displays static toggle items or dynamic accordion content from ACF Pro, Meta Box, and Pods repeater-style fields. It includes an Elementor widget, a dynamic block, and a shortcode so the same toggle content pattern can be used across page builders and native WordPress content.
 
 Features include:
 
@@ -31,15 +31,15 @@ The plugin does not connect to external services or load remote JavaScript or CS
 
 == Installation ==
 
-1. Upload `bodyloom-dynamic-toggles` to the `/wp-content/plugins/` directory.
+1. Upload `vybose-repeater-accordion` to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the Plugins menu in WordPress.
-3. Add the Bodyloom Toggles widget, the Dynamic Toggles block, or the `[bodyloom_toggles]` shortcode.
+3. Add the Vybose Repeater Accordion widget, the Dynamic Toggles block, or the `[vybose_repeater_accordion]` shortcode.
 
 == Usage ==
 
 = Elementor =
 
-Use the "Bodyloom Toggles" widget. Choose Static for manually managed toggle items, or Dynamic to use repeater data from ACF Pro, Meta Box, or Pods.
+Use the "Vybose Repeater Accordion" widget. Choose Static for manually managed toggle items, or Dynamic to use repeater data from ACF Pro, Meta Box, or Pods.
 
 = Block Editor =
 
@@ -48,7 +48,7 @@ Use the "Dynamic Toggles" block and configure the source, repeater field, title 
 = Shortcode =
 
 Use a shortcode such as:
-`[bodyloom_toggles src="acf" repeater="my_repeater" title_field="question" content_field="answer" type="accordion"]`
+`[vybose_repeater_accordion src="acf" repeater="my_repeater" title_field="question" content_field="answer" type="accordion"]`
 
 == Frequently Asked Questions ==
 
@@ -66,16 +66,21 @@ Yes. Field pickers are provided where possible, but manual field-path fields rem
 
 == Screenshots ==
 
-1. Rendered accordion example: `assets/screenshots/bodyloom-dynamic-toggles-accordion-rendered.jpg`
-2. Elementor elements panel: `assets/screenshots/elementor-elements-panel-bodyloom-icon-list-and-toggles-plugins.png`
-3. Toggles content controls: `assets/screenshots/edit-bodyloom-toggles-content-panel-1.png`
-4. Additional toggles content controls: `assets/screenshots/edit-bodyloom-toggles-content-panel-2.png`
-5. ACF repeater field controls: `assets/screenshots/edit-bodyloom-toggles-content-panel-acf-repeater.png`
-6. Pods field controls: `assets/screenshots/edit-bodyloom-toggles-content-panel-pods.png`
-7. Meta Box field controls: `assets/screenshots/edit-bodyloom-toggles-content-panel-meta-box.png`
-8. Toggles advanced controls: `assets/screenshots/edit-bodyloom-toggles-advanced-panel.png`
+1. Rendered accordion example: `assets/screenshots/vybose-repeater-accordion-accordion-rendered.jpg`
+2. Elementor elements panel: `assets/screenshots/elementor-elements-panel-vybose-icon-list-and-toggles-plugins.png`
+3. Toggles content controls: `assets/screenshots/edit-vybose-repeater-accordion-content-panel-1.png`
+4. Additional toggles content controls: `assets/screenshots/edit-vybose-repeater-accordion-content-panel-2.png`
+5. ACF repeater field controls: `assets/screenshots/edit-vybose-repeater-accordion-content-panel-acf-repeater.png`
+6. Pods field controls: `assets/screenshots/edit-vybose-repeater-accordion-content-panel-pods.png`
+7. Meta Box field controls: `assets/screenshots/edit-vybose-repeater-accordion-content-panel-meta-box.png`
+8. Toggles advanced controls: `assets/screenshots/edit-vybose-repeater-accordion-advanced-panel.png`
 
 == Changelog ==
+
+= 2.0.0 =
+* Renamed the plugin to Vybose Repeater Accordion. The slug, text domain, namespace, constants, CSS classes, script handles, block name, and shortcode all move to the vybose prefix.
+* Shortcode is now [vybose_repeater_accordion].
+* Block is now vybose/repeater-accordion.
 
 = 1.1.3 =
 * Hardened the field-discovery REST endpoint. It now checks the edit capability of the post type being requested, rather than a blanket edit_posts check.

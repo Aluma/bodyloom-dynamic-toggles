@@ -1,8 +1,8 @@
 <?php
-namespace Bodyloom\DynamicToggles;
+namespace Vybose\RepeaterAccordion;
 
-use Bodyloom\DynamicToggles\Widgets\Toggles;
-use Bodyloom\DynamicToggles\Provider_Factory;
+use Vybose\RepeaterAccordion\Widgets\Toggles;
+use Vybose\RepeaterAccordion\Provider_Factory;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -50,7 +50,7 @@ class Plugin
      */
     private function includes()
     {
-        // require_once BODYLOOM_TOGGLES_PATH . 'includes/widgets/class-toggles-widget.php';
+        // require_once VYBOSE_REPEATER_ACCORDION_PATH . 'includes/widgets/class-toggles-widget.php';
     }
 
     /**
@@ -64,7 +64,7 @@ class Plugin
         add_action('elementor/widgets/register', [$this, 'register_widgets']);
 
         // Register Shortcode
-        add_shortcode('bodyloom_toggles', [$this, 'render_shortcode']);
+        add_shortcode('vybose_repeater_accordion', [$this, 'render_shortcode']);
 
         add_action('rest_api_init', [$this, 'register_rest_routes']);
     }
@@ -76,8 +76,17 @@ class Plugin
      */
     public function register_widgets($widgets_manager)
     {
-        require_once BODYLOOM_TOGGLES_PATH . 'includes/widgets/class-toggles-widget.php';
+        require_once VYBOSE_REPEATER_ACCORDION_PATH . 'includes/widgets/class-toggles-widget.php';
         $widgets_manager->register(new Widgets\Toggles());
+
+        // Resolves documents saved before the 2.0.0 rename. Absent from the
+        // WordPress.org package, where no legacy data exists.
+        $legacy_alias = VYBOSE_REPEATER_ACCORDION_PATH . 'includes/compat/class-legacy-widget-alias.php';
+
+        if (file_exists($legacy_alias)) {
+            require_once $legacy_alias;
+            $widgets_manager->register(new Compat\Legacy_Widget_Alias());
+        }
     }
 
     /**
@@ -86,27 +95,27 @@ class Plugin
     public function register_assets_and_blocks()
     {
         wp_register_style(
-            'bodyloom-toggles',
-            BODYLOOM_TOGGLES_URL . 'assets/css/bodyloom-toggles.css',
+            'vybose-repeater-accordion',
+            VYBOSE_REPEATER_ACCORDION_URL . 'assets/css/vybose-repeater-accordion.css',
             [],
-            BODYLOOM_TOGGLES_VERSION
+            VYBOSE_REPEATER_ACCORDION_VERSION
         );
 
         wp_register_script(
-            'bodyloom-toggles',
-            BODYLOOM_TOGGLES_URL . 'assets/js/bodyloom-toggles.js',
+            'vybose-repeater-accordion',
+            VYBOSE_REPEATER_ACCORDION_URL . 'assets/js/vybose-repeater-accordion.js',
             ['jquery'],
-            BODYLOOM_TOGGLES_VERSION,
+            VYBOSE_REPEATER_ACCORDION_VERSION,
             true
         );
 
-        register_block_type(BODYLOOM_TOGGLES_PATH . 'blocks/toggles');
+        register_block_type(VYBOSE_REPEATER_ACCORDION_PATH . 'blocks/toggles');
     }
 
     public function register_rest_routes()
     {
         register_rest_route(
-            'bodyloom-dynamic-toggles/v1',
+            'vybose-repeater-accordion/v1',
             '/fields',
             [
                 'methods' => 'GET',
@@ -163,11 +172,11 @@ class Plugin
             'type' => 'toggles', // toggles or accordion
             'title_tag' => 'div', // HTML tag for title
             'faq_schema' => 'no', // yes or no
-        ], $atts, 'bodyloom_toggles');
+        ], $atts, 'vybose_repeater_accordion');
 
         // Enqueue assets
-        wp_enqueue_style('bodyloom-toggles');
-        wp_enqueue_script('bodyloom-toggles');
+        wp_enqueue_style('vybose-repeater-accordion');
+        wp_enqueue_script('vybose-repeater-accordion');
 
         if (empty($atts['repeater']) || empty($atts['title_field']) || empty($atts['content_field'])) {
             return '';
@@ -181,7 +190,7 @@ class Plugin
         }
 
         // Prepare view data
-        $bodyloom_view_data = [
+        $vybose_view_data = [
             'id' => 'sc-' . uniqid(),
             'settings' => [
                 'type' => $atts['type'],
@@ -194,7 +203,7 @@ class Plugin
         ];
 
         ob_start();
-        include BODYLOOM_TOGGLES_PATH . 'templates/toggles-view.php';
+        include VYBOSE_REPEATER_ACCORDION_PATH . 'templates/toggles-view.php';
         return ob_get_clean();
     }
 

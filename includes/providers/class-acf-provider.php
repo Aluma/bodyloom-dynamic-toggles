@@ -1,7 +1,7 @@
 <?php
-namespace Bodyloom\DynamicToggles\Providers;
+namespace Vybose\RepeaterAccordion\Providers;
 
-use Bodyloom\DynamicToggles\Interfaces\Field_Provider;
+use Vybose\RepeaterAccordion\Interfaces\Field_Provider;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -18,7 +18,7 @@ class ACF_Provider implements Field_Provider
     public function get_repeater_data($post_id, $field_name, $title_field, $content_field)
     {
         $data = [];
-        $field_name = \Bodyloom\DynamicToggles\Provider_Factory::parse_source_path($field_name)['path'];
+        $field_name = \Vybose\RepeaterAccordion\Provider_Factory::parse_source_path($field_name)['path'];
 
         if (!$this->is_active() || '' === $field_name) {
             return $data;
@@ -30,8 +30,8 @@ class ACF_Provider implements Field_Provider
 
         foreach ($this->resolve_rows($post_id, $field_name) as $row) {
             $data[] = [
-                'toggle_title' => \Bodyloom\DynamicToggles\Provider_Factory::get_nested_value($row, $title_field, $field_name),
-                'toggle_content' => \Bodyloom\DynamicToggles\Provider_Factory::get_nested_value($row, $content_field, $field_name),
+                'toggle_title' => \Vybose\RepeaterAccordion\Provider_Factory::get_nested_value($row, $title_field, $field_name),
+                'toggle_content' => \Vybose\RepeaterAccordion\Provider_Factory::get_nested_value($row, $content_field, $field_name),
                 'toggle_custom_id' => '',
             ];
         }
@@ -83,7 +83,7 @@ class ACF_Provider implements Field_Provider
      */
     private function normalize_path($path)
     {
-        $path = \Bodyloom\DynamicToggles\Provider_Factory::parse_source_path(is_string($path) ? $path : '')['path'];
+        $path = \Vybose\RepeaterAccordion\Provider_Factory::parse_source_path(is_string($path) ? $path : '')['path'];
 
         if ('' === $path) {
             return '';
